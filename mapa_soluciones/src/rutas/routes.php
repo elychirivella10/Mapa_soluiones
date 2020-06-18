@@ -399,6 +399,24 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
      $app->post('/api/registro/proyetos', function (Request $request, Response $response){
         $body = json_decode($request->getBody());
+            $nombre_datos;
+            $id_tipo_solucion_datos;
+            $descripcion_datos;
+            $accion_general_datos;
+            $accion_especifica;
+            $observacion;
+            $obra;
+            $coordenadas_sector;
+            $nombre_sector;
+            $lapso_estimado_inicio;
+            $lapso_estimado_culminacion;
+            $lapso_culminacion_inicio;
+
+        $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);
+        $acciones_generales = array($accion_especifica , $observacion);
+        $sector = array($coordenadas_sector , $nombre_sector);
+        $lapso = array($lapso_estimado_inicio, $lapso_estimado_culminacion , $lapso_culminacion_inicio);
+
         $registro = new Registro();
         $registro->crearProyectos($body);
 
