@@ -395,32 +395,65 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
 
      });
-
-
      $app->post('/api/registro/proyetos', function (Request $request, Response $response){
         $body = json_decode($request->getBody());
-            $nombre_datos;
-            $id_tipo_solucion_datos;
-            $descripcion_datos;
-            $accion_general_datos;
-            $accion_especifica;
-            $observacion;
-            $obra;
-            $coordenadas_sector;
-            $nombre_sector;
-            $lapso_estimado_inicio;
-            $lapso_estimado_culminacion;
-            $lapso_culminacion_inicio;
 
-        $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);
-        $acciones_generales = array($accion_especifica , $observacion);
-        $sector = array($coordenadas_sector , $nombre_sector);
-        $lapso = array($lapso_estimado_inicio, $lapso_estimado_culminacion , $lapso_culminacion_inicio);
+            $nombre_datos = $body->{'datos'}->{'nombre_datos'};
+            $id_tipo_solucion_datos =$body->{'datos'}->{'id_tipo_solucion_datos'};           
+            $descripcion_datos = $body->{'datos'}->{'descripcion_datos'};
+            $accion_general_datos = $body->{'datos'}->{'accion_general'};
 
-        $registro = new Registro();
-        $registro->crearProyectos($body);
+            $accion_especifica = $body->{'accion_especifica'};
+            $observacion =$body->{'observacion'};
+            
+            $obra = $body->{'obra'};
+
+            $coordenadas_sector = $body->{'coordenadas_sector'};
+            $nombre_sector = $body->{'nombre_sector'};           
+           
+            $lapso_estimado_inicio = $body->{'lapso_estimado_inicio'}; 
+            $lapso_estimado_culminacion = $body->{'lapso_estimado_culminacion'};
+            
+            $ciclo_inicial =$body->{'ciclo_inicial'};
+            $opcion_ciclo_inicial = $body->{'opcion_ciclo_inicial'};//---
+            
+            $ejecucion_bolivares =  $body->{'ejecucion_bolivares'};
+            $ejecucion_euros = $body->{'ejecucion_euros'};
+            $ejecucion_dolares =$body->{'ejecucion_dolares'};
+            $ejecucion_rublos = $body->{'ejecucion_rublos'};
+            
+            $inversion_bolivares = $body->{'inversion_bolivares'};
+            $inversion_euros = $body->{'inversion_euros'};
+            $inversion_dolares = $body->{'inversion_dolares'};
+            $inversion_rublos = $body->{'inversion_rublos'};            
+            
+            $poblacion_inicial = $body->{'poblacion_inicial'};    //---     
+            
+            $lps_inicial =$body->{'lps_inicial'};//---
+
+            $nombre_proyecto = $body->{'nombre_proyecto'};
+            $descripcion_proyecto = $body->{'descripcion_proyecto'};
+            $id_hidrologica = $body->{'id_hidrologica'};
+            $id_estado = $body->{'id_estado'};
+            $id_municipio = $body->{'id_municipio'};
+            $id_parroquia = $body->{'id_parroquia'};
+            $id_estatus = $body->{'id_estatus'};
+            $id_estado_proyecto = $body->{'id_estado_proyecto'};
+            
+
+            $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos );
+            $acciones_especificas = array($accion_especifica , $observacion);
+            $sector = array( $coordenadas_sector , $nombre_sector);
+            $lapso = array($lapso_estimado_inicio , $lapso_estimado_culminacion);
+            $ciclos = array( $ciclo_inicial , $opcion_ciclo_inicial );
+            $ejecucion_financiera = array($ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos);
+            $inversion = array($inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos);
+            $proyecto = array( $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto);
 
         
+        $registro = new Registro();
+        return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
 
 
      });
+
