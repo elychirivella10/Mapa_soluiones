@@ -65,6 +65,7 @@
 
             }
 
+            //que fea esta mierda
 
             function crearProyectos($datos , $acciones_especificas , $obras , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion , $lps_inicial , $proyecto){
                
