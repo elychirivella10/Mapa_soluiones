@@ -46,7 +46,6 @@
                     $stmt = $db->prepare($sql); 
                     $stmt->bind_param("ssi" , $lapso[3] , $lapso[1] , $lapso[0]);
                     $stmt->execute();
-                    $stmt = $stmt->get_result();
 
                         if ($stmt) {
                             $sql = "UPDATE ciclos SET ciclo_final = ? , opcion_ciclo_final = ? WHERE ciclos.id_ciclo = ?;";
@@ -55,7 +54,6 @@
                             $stmt = $db->prepare($sql); 
                             $stmt->bind_param("isi" , $ciclos[0] , $ciclos[1] , $ciclo[2]);
                             $stmt->execute();
-                            $stmt = $stmt->get_result();
 
                                 if ($stmt) {
                                     $sql = "UPDATE ejecucion_financiera SET ejecucion_bolivares_final = ?, ejecucion_euros_final = ?, ejecucion_dolares_final = ?, ejecucion_rublos_final = ? WHERE ejecucion_financiera.id_ejecucion_financiera = ?";
@@ -64,7 +62,6 @@
                                     $stmt = $db->prepare($sql); 
                                     $stmt->bind_param("ddddi" , $ejecucion_financiera[0] , $ejecucion_financiera[1] , $ejecucion_financiera[2] , $ejecucion_financiera[3] , $ejecucion_financiera[4]);
                                     $stmt->execute();
-                                    $stmt = $stmt->get_result();
 
                                         if ($stmt) {
                                         $sql = "UPDATE poblacion SET poblacion_final = ? WHERE poblacion.id_problacion = ?";
@@ -73,7 +70,6 @@
                                         $stmt = $db->prepare($sql); 
                                         $stmt->bind_param("ii" , $poblacion_final[0] , $poblacion_final[1] );
                                         $stmt->execute();
-                                        $stmt = $stmt->get_result();
 
                                             if ($stmt) {
 
@@ -83,7 +79,6 @@
                                                 $stmt = $db->prepare($sql); 
                                                 $stmt->bind_param("ii" , $lps[0] , $lps[1] );
                                                 $stmt->execute();
-                                                $stmt = $stmt->get_result();
 
                                                 if ($stmt) {
                                                     
@@ -93,7 +88,6 @@
                                                     $stmt = $db->prepare($sql); 
                                                     $stmt->bind_param("iii" , $proyectos[0] , $proyectos[1], $proyectos[2]);
                                                     $stmt->execute();
-                                                    $stmt = $stmt->get_result();
                                                     return "Se ha actualizado";
                                                 }
                                                 
