@@ -94,6 +94,7 @@
                                                     $stmt->bind_param("iii" , $proyectos[0] , $proyectos[1], $proyectos[2]);
                                                     $stmt->execute();
                                                     $stmt = $stmt->get_result();
+                                                    return "Se ha actualizado";
                                                 }
                                                 
                                             }

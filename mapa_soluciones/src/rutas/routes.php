@@ -476,7 +476,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 	"id_estado_proyecto":"2",
 	"id_proyecto":"2",
 */
-     $app->post('/api/actualizacion/final/proyetos', function (Request $request, Response $response){
+     $app->put('/api/actualizacion/final/proyetos', function (Request $request, Response $response){
        // $body = json_decode($request->getBody());
 
 
@@ -498,6 +498,9 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         
         $poblacion_final = 1;//$body->{'poblacion_final'};
         $id_poblacion = 1;//$body->{'id_ejecucion_financiera'};
+        
+        $lps_final = 1;//$body->{'poblacion_final'};
+        $id_lps = 1;//$body->{'id_ejecucion_financiera'};
 
         $id_estatus = 1;//$body->{'id_estatus'};
         $id_estado_proyecto = 2;//$body->{'id_estado_proyecto'};
@@ -505,10 +508,10 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         
 
 
-        $lapso = array($id_lapso , $lapso_culminación_final , $lapso_culminación_inicio);
+        $lapso = array($id_lapso , $lapso_culminacion_final , $lapso_culminación_inicio);
         $ciclos = array($ciclo_final , $opcion_ciclo_final , $id_ciclo);
         $ejecucion_financiera = array($ejecucion_bolivares_final , $ejecucion_euros_final , $ejecucion_dolares_final , $ejecucion_rublos_final , $id_ejecucion_financiera);
-        $poblacion = array($poblacion_final , $id_problacion);
+        $poblacion = array($poblacion_final , $id_poblacion);
         $lps = array($lps_final , $id_lps);
         $proyectos = array($id_estatus , $id_estado_proyecto, $id_proyecto);
         
