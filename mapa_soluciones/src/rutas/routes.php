@@ -395,6 +395,8 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
 
      });
+
+     
      $app->post('/api/registro/proyetos', function (Request $request, Response $response){
         $body = json_decode($request->getBody());
 
@@ -453,6 +455,50 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         
         $registro = new Registro();
         return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+
+
+     });
+
+
+
+     $app->post('/api/actualizacion/final/proyetos', function (Request $request, Response $response){
+        $body = json_decode($request->getBody());
+
+
+        
+        $id_lapso = $body->{'id_lapso'};        
+        $lapso_culminacion_final = $body->{'lapso_culminacion_final'};        
+        $lapso_culminación_inicio = $body->{'lapso_culminación_inicio'};
+
+        $ciclo_final = $body->{'ciclo_final'};        
+        $opcion_ciclo_final = $body->{'opcion_ciclo_final'};
+        $id_ciclo = $body->{'id_ciclo'};        
+
+        $ejecucion_bolivares_final = $body->{'ejecucion_bolivares final'};
+        $ejecucion_euros_final = $body->{'ejecucion_euros_final'};
+        $ejecucion_dolares_final = $body->{'ejecucion_dolares_final'};
+        $ejecucion_rublos_final = $body->{'ejecucion_rublos_final'};
+        $id_ejecucion_financiera = $body->{'id_ejecucion_financiera'};
+
+        
+        $poblacion_final = $body->{'poblacion_final'};
+        $id_poblacion = $body->{'id_ejecucion_financiera'};
+
+        $id_estatus = $body->{'id_estatus'};
+        $id_estado_proyecto = $body->{'id_estado_proyecto'};
+        $id_proyecto = $body->{'id_proyecto'};
+        
+
+
+        $lapso = array($id_lapso , $lapso_culminación_final , $lapso_culminación_inicio);
+        $ciclos = array($ciclo_final , $opcion_ciclo_final , $id_ciclo);
+        $ejecucion_financiera = array($ejecucion_bolivares_final , $ejecucion_euros_final , $ejecucion_dolares_final , $ejecucion_rublos_final , $id_ejecucion_financiera);
+        $poblacion = array($poblacion_final , $id_problacion);
+        $lps = array($lps_final , $id_lps);
+        $proyectos = array($id_estatus , $id_estado_proyecto, $id_proyecto);
+        
+        $registro = new Registro();
+        return $registro->actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos);
 
 
      });

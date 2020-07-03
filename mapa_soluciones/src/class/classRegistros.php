@@ -36,16 +36,7 @@
 
             }
 
-//$lapso = $id_lapso , $lapso_culminación_final , $lapso_culminación_inicio
-//$ciclos = $ciclo_final , $opcion_ciclo_final , $id_ciclo
-//$ejecucion_financiera = $ejecucion_bolivares_final , $ejecucion_euros_final , $ejecucion_dolares_final , $ejecucion_rublos_final , $id_ejecucion_financiera
-//$poblacion = $poblacion_final , $id_problacion
-//$lps = $lps_final , $id_lps
-
-
-
-
-            function actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps){
+            function actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos){
 
                 $sql = "UPDATE lapso SET lapso_culminación_inicio = ?, lapso_culminación_final = ? WHERE lapso.id_lapso = ?";
                
@@ -93,6 +84,17 @@
                                                 $stmt->bind_param("ii" , $lps[0] , $lps[1] );
                                                 $stmt->execute();
                                                 $stmt = $stmt->get_result();
+
+                                                if ($stmt) {
+                                                    
+                                                    $sql = "UPDATE proyectos SET id_estatus = ?, id_estado_proyecto = ? WHERE proyectos.id_proyecto = ?";
+                                                    $db = new DB();
+                                                    $db=$db->connection('mapa_soluciones');
+                                                    $stmt = $db->prepare($sql); 
+                                                    $stmt->bind_param("iii" , $proyectos[0] , $proyectos[1], $proyectos[2]);
+                                                    $stmt->execute();
+                                                    $stmt = $stmt->get_result();
+                                                }
                                                 
                                             }
 
@@ -244,5 +246,5 @@
 
 
 
-        
+
 ?>
