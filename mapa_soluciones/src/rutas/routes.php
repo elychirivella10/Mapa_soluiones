@@ -460,33 +460,48 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
      });
 
 
-
+/*
+     "id_lapso":"1",
+	"lapso_culminacion_final":"2020-06-27",
+	"lapso_culminacion_inicio":"2020-06-25",
+	"ciclo_final":"1",
+	"opcion_ciclo_final":"semanas",
+	"ejecucion_bolivares_final":"1",
+	"ejecucion_euros_final":"1",
+	"ejecucion_dolares_final":"1",
+	"ejecucion_rublos_final":"1",
+	"poblacion_final":"1",
+	"id_poblacion":"1",
+	"id_estatus":"1",
+	"id_estado_proyecto":"2",
+	"id_proyecto":"2",
+*/
      $app->post('/api/actualizacion/final/proyetos', function (Request $request, Response $response){
-        $body = json_decode($request->getBody());
+       // $body = json_decode($request->getBody());
 
 
         
-        $id_lapso = $body->{'id_lapso'};        
-        $lapso_culminacion_final = $body->{'lapso_culminacion_final'};        
-        $lapso_culminación_inicio = $body->{'lapso_culminación_inicio'};
+        $id_lapso = 1; //$body->{'id_lapso'};        
+        $lapso_culminacion_final = "2020-06-27";//$body->{'lapso_culminacion_final'};        
+        $lapso_culminación_inicio = "2020-06-25";// $body->{'lapso_culminación_inicio'};
 
-        $ciclo_final = $body->{'ciclo_final'};        
-        $opcion_ciclo_final = $body->{'opcion_ciclo_final'};
-        $id_ciclo = $body->{'id_ciclo'};        
+        $ciclo_final = 1;//$body->{'ciclo_final'};        
+        $opcion_ciclo_final = "semanas";//$body->{'opcion_ciclo_final'};
+        $id_ciclo = 1; //$body->{'id_ciclo'};        
 
-        $ejecucion_bolivares_final = $body->{'ejecucion_bolivares final'};
-        $ejecucion_euros_final = $body->{'ejecucion_euros_final'};
-        $ejecucion_dolares_final = $body->{'ejecucion_dolares_final'};
-        $ejecucion_rublos_final = $body->{'ejecucion_rublos_final'};
-        $id_ejecucion_financiera = $body->{'id_ejecucion_financiera'};
+        $ejecucion_bolivares_final = 1;//$body->{'ejecucion_bolivares final'};
+        $ejecucion_euros_final = 1;//$body->{'ejecucion_euros_final'};
+        $ejecucion_dolares_final = 1;//$body->{'ejecucion_dolares_final'};
+        $ejecucion_rublos_final = 1;//$body->{'ejecucion_rublos_final'};
+        $id_ejecucion_financiera = 1;//$body->{'id_ejecucion_financiera'};
 
         
-        $poblacion_final = $body->{'poblacion_final'};
-        $id_poblacion = $body->{'id_ejecucion_financiera'};
+        $poblacion_final = 1;//$body->{'poblacion_final'};
+        $id_poblacion = 1;//$body->{'id_ejecucion_financiera'};
 
-        $id_estatus = $body->{'id_estatus'};
-        $id_estado_proyecto = $body->{'id_estado_proyecto'};
-        $id_proyecto = $body->{'id_proyecto'};
+        $id_estatus = 1;//$body->{'id_estatus'};
+        $id_estado_proyecto = 2;//$body->{'id_estado_proyecto'};
+        $id_proyecto = 2;//$body->{'id_proyecto'};
         
 
 
