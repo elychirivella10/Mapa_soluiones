@@ -127,12 +127,12 @@
 
                     if ($stmt) {
                         $id_datos = $stmt->{"insert_id"};
-                        $sql = "INSERT INTO acciones_especificas (id_accion_especifica, accion_especifica, id_datos, valor) VALUES (NULL, ? , ? , 0 )";
+                        $sql = "INSERT INTO acciones_especificas (id_accion_especifica, accion_especifica, id_intervencion, cantidad, id_unidades, id_datos, valor) VALUES (NULL, ? , ? , ? , ? , ? , 0 );";
                         for ($i=0; $i < count($acciones_especificas) ; $i++) { 
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
                             $stmt = $db->prepare($sql); 
-                            $stmt->bind_param("ii", $acciones_especificas[$i] , $id_datos );
+                            $stmt->bind_param("siiii", $acciones_especificas[$i]['observacion'] , $acciones_especificas[$i]['intervencion'] , $acciones_especificas[$i]['cantidad'] , $acciones_especificas[$i]['unidad'] , $id_datos);
                             $stmt->execute();
                         }
 
