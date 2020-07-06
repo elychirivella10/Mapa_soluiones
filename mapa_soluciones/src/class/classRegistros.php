@@ -131,7 +131,7 @@
                         $db = new DB();
                         $db=$db->connection('mapa_soluciones');
                         $stmt = $db->prepare($sql); 
-                        $stmt->bind_param("ssi", $acciones_especificas[0] , $acciones_especificas[1] , $id_datos );
+                        $stmt->bind_param("isi", $acciones_especificas[0] , $acciones_especificas[1] , $id_datos );
                         $stmt->execute();
 
                         if ($stmt) {

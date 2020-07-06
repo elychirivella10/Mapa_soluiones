@@ -417,7 +417,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $lapso_estimado_culminacion = $body->{'lapso_estimado_culminacion'};
             
             $ciclo_inicial =$body->{'ciclo_inicial'};
-            $opcion_ciclo_inicial = $body->{'opcion_ciclo_inicial'};//---
+            $opcion_ciclo_inicial = $body->{'opcion_ciclo_inicial'};
             
             $ejecucion_bolivares =  $body->{'ejecucion_bolivares'};
             $ejecucion_euros = $body->{'ejecucion_euros'};
@@ -429,9 +429,9 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $inversion_dolares = $body->{'inversion_dolares'};
             $inversion_rublos = $body->{'inversion_rublos'};            
             
-            $poblacion_inicial = $body->{'poblacion_inicial'};    //---     
+            $poblacion_inicial = $body->{'poblacion_inicial'};     
             
-            $lps_inicial =$body->{'lps_inicial'};//---
+            $lps_inicial =$body->{'lps_inicial'};
 
             $nombre_proyecto = $body->{'nombre_proyecto'};
             $descripcion_proyecto = $body->{'descripcion_proyecto'};
