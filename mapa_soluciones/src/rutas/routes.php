@@ -404,9 +404,8 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_tipo_solucion_datos =$body->{'datos'}->{'id_tipo_solucion_datos'};           
             $descripcion_datos = $body->{'datos'}->{'descripcion_datos'};
             $accion_general_datos = $body->{'datos'}->{'accion_general'};
-
-            $accion_especifica = $body->{'accion_especifica'};
-            $observacion =$body->{'observacion'};
+            
+            $acciones_especificas = $body->{'accion_especifica'};
             
             $obra = $body->{'obra'};
 
@@ -431,7 +430,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             
             $poblacion_inicial = $body->{'poblacion_inicial'};     
             
-            $lps_inicial =$body->{'lps_inicial'};
+            $lps_inicial =$body->{'lps_inicial'};       
 
             $nombre_proyecto = $body->{'nombre_proyecto'};
             $descripcion_proyecto = $body->{'descripcion_proyecto'};
@@ -440,11 +439,8 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_municipio = $body->{'id_municipio'};
             $id_parroquia = $body->{'id_parroquia'};
             $id_estatus = $body->{'id_estatus'};
-            $id_estado_proyecto = $body->{'id_estado_proyecto'};
+            $id_estado_proyecto = $body->{'id_estado_proyecto'};        
             
-
-            $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos );
-            $acciones_especificas = array($accion_especifica , $observacion);
             $sector = array( $coordenadas_sector , $nombre_sector);
             $lapso = array($lapso_estimado_inicio , $lapso_estimado_culminacion);
             $ciclos = array( $ciclo_inicial , $opcion_ciclo_inicial );
