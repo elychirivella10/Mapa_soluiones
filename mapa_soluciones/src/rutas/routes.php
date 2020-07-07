@@ -15,13 +15,13 @@ use \Firebase\JWT\JWT;
 
 
 
-$app->get('/api/creacion/usuarios', function (Request $request, Response $response) { 
+$app->post('/api/creacion/usuarios', function (Request $request, Response $response) { 
    $body = json_decode($request->getBody());
-    $nick = "Alejx";//$body->{'nick'};
-    $email = "xxx@xxx";//$body->{'email'};
-    $pass = "1";//$body->{'pass'};
-    $rol = 3 ;//$body->{'id_rol'};           
-    $hidrologica = 2; //$body->{'id_hidrologica'};           
+    $nick = $body->{'nick'};
+    $email = $body->{'email'};
+    $pass = $body->{'pass'};
+    $rol = $body->{'id_rol'};           
+    $hidrologica = $body->{'id_hidrologica'};           
     
     $usuarios = new Usuarios($nick , $pass);
     return $usuarios->creacion($body , $email , $rol , $hidrologica);
