@@ -7,11 +7,30 @@ $app = new \Slim\App;
 require __DIR__ . '/../class/auth.php';
 require __DIR__ . '/../class/estadisticas.php';
 require __DIR__ . '/../class/classRegistros.php';
+require __DIR__ . '/../class/crearUsuario.php';
 require __DIR__ . '/../config/db.php';
 
 use \Firebase\JWT\JWT;
 
-//******************Agregar clientes Post***************//
+
+
+
+$app->get('/api/creacion/usuarios', function (Request $request, Response $response) { 
+   $body = json_decode($request->getBody());
+    $nick = "Alejx";//$body->{'nick'};
+    $email = "xxx@xxx";//$body->{'email'};
+    $pass = "1";//$body->{'pass'};
+    $rol = 3 ;//$body->{'id_rol'};           
+    $hidrologica = 2; //$body->{'id_hidrologica'};           
+    
+    $usuarios = new Usuarios($nick , $pass);
+    return $usuarios->creacion($body , $email , $rol , $hidrologica);
+     });
+
+
+
+
+
 
 $app->post('/authenticate', function (Request $request, Response $response) {
     $body = json_decode($request->getBody());
