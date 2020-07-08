@@ -460,6 +460,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_estatus = $body->{'id_estatus'};
             $id_estado_proyecto = $body->{'id_estado_proyecto'};        
             
+            $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);
             $sector = array( $coordenadas_sector , $nombre_sector);
             $lapso = array($lapso_estimado_inicio , $lapso_estimado_culminacion);
             $ciclos = array( $ciclo_inicial , $opcion_ciclo_inicial );
