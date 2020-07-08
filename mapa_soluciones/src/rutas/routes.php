@@ -520,3 +520,13 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
      });
 
+     $app->get('/api/calculo/porcentaje/acciones', function (Request $request, Response $response) { 
+        $body = json_decode($request->getBody());
+             $id_datos = $body->{'id_datos'};
+
+
+         $estadisticas = new Proyecto();
+         return $estadisticas->porcentajeAcciones($id_datos);
+         
+          });
+     
