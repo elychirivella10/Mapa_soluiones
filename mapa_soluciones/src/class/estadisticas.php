@@ -4,7 +4,7 @@ class Proyecto {
 
 
     function porcentajes4variables($orden, $var1, $var2, $var3, $var4){
-
+/*
         $Porvar3 = null;
         $Porvar4 = null;
         
@@ -31,7 +31,7 @@ class Proyecto {
             "Porcentaje Cuatro" => $Porvar4
         ]);
 
-
+*/
     }   
 
     function porcentajeAcciones($id_datos){

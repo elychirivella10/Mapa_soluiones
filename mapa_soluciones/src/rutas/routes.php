@@ -452,7 +452,17 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             
             $ciclo_inicial =$body->{'ciclo_inicial'};
             $opcion_ciclo_inicial = $body->{'opcion_ciclo_inicial'};
-            
+
+            if ($ciclo_inicial < 4 && $opcion_ciclo_inicial === "dias") {
+                $id_estatus = 1;
+            }else if ($ciclo_inicial > 3 && $opcion_ciclo_inicial === "dias" || $ciclo_inicial < 45 && $opcion_ciclo_inicial === "dias" || $ciclo_inicial > 0 && $opcion_ciclo_inicial === "semanas" || $ciclo_inicial < 7 && $opcion_ciclo_inicial === "semanas" || $ciclo_inicial === 1 && $opcion_ciclo_inicial === "meses") {
+                $id_estatus = 2;
+            }else if ($ciclo_inicial > 44 && $opcion_ciclo_inicial === "dias" || $ciclo_inicial > 6 && $opcion_ciclo_inicial === "semanas" || $ciclo_inicial > 1 && $opcion_ciclo_inicial === "meses") {
+               $id_estatus = 3;
+            }else {
+                $id_estatus = 3;
+            }
+                  
             $ejecucion_bolivares =  $body->{'ejecucion_bolivares'};
             $ejecucion_euros = $body->{'ejecucion_euros'};
             $ejecucion_dolares =$body->{'ejecucion_dolares'};
@@ -473,7 +483,6 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_estado = $body->{'id_estado'};
             $id_municipio = $body->{'id_municipio'};
             $id_parroquia = $body->{'id_parroquia'};
-            $id_estatus = $body->{'id_estatus'};
             $id_estado_proyecto = $body->{'id_estado_proyecto'};        
             
             $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);

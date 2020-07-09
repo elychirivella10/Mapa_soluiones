@@ -52,7 +52,7 @@
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
                             $stmt = $db->prepare($sql); 
-                            $stmt->bind_param("isi" , $ciclos[0] , $ciclos[1] , $ciclo[2]);
+                            $stmt->bind_param("isi" , $ciclos[0] , $ciclos[1] , $ciclos[2]);
                             $stmt->execute();
 
                                 if ($stmt) {
@@ -68,7 +68,7 @@
                                         $db = new DB();
                                         $db=$db->connection('mapa_soluciones');
                                         $stmt = $db->prepare($sql); 
-                                        $stmt->bind_param("ii" , $poblacion_final[0] , $poblacion_final[1] );
+                                        $stmt->bind_param("ii" , $poblacion[0] , $poblacion[1] );
                                         $stmt->execute();
 
                                             if ($stmt) {
