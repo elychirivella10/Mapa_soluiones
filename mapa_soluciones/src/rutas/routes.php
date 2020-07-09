@@ -410,7 +410,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
      });
 
 
-     $app->put('/api/actualizacion/acciones/especificas/{id_accion}/{valor},{observacion}', function (Request $request, Response $response){
+     $app->put('/api/actualizacion/acciones/especificas/{id_accion}/{valor}', function (Request $request, Response $response){
         $id_accion = $request->getAttribute('id_accion') + 0;
         $observacion = $request->getAttribute('observacion');
         $valor = $request->getAttribute('valor') + 0;
@@ -422,7 +422,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
                 return $check[$i].' No esta definida';
             }else{
                 $registro = new Registro(0,$id_accion);
-                return $registro->actualizacion($observacion , $valor);
+                return $registro->actualizacion($valor);
             }
         }
 

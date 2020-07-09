@@ -9,15 +9,15 @@
                 $this->accion=$accion;
             }
 
-            function actualizacion($observacion , $valor){
+            function actualizacion($valor){
 
-                $sql = "UPDATE acciones_especificas SET observacion=?,valor=? WHERE id_accion_especifica = ?";
+                $sql = "UPDATE acciones_especificas SET valor = ? WHERE acciones_especificas.id_accion_especifica = ?;";
                
                 try {
                     $db = new DB();
                     $db=$db->connection('mapa_soluciones');
                     $stmt = $db->prepare($sql); 
-                    $stmt->bind_param("sii", $observacion , $valor , $this->accion);
+                    $stmt->bind_param("ii", $valor , $this->accion);
                     $stmt->execute();
 
                     $stmt = $stmt->get_result();
