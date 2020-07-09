@@ -23,8 +23,17 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
     $rol = $body->{'id_rol'};           
     $hidrologica = $body->{'id_hidrologica'};           
     
-    $usuarios = new Usuarios($nick , $pass);
-    return $usuarios->creacion($body , $email , $rol , $hidrologica);
+    $check = array($nick , $pass ,$email , $rol , $hidrologica );
+    
+    for ($i=0; $i < count($check) ; $i++) { 
+        if (!isset($check[$i])) {
+            return $check[$i].' No esta definida';
+        }else{
+            $usuarios = new Usuarios($nick , $pass);
+            return $usuarios->creacion($body , $email , $rol , $hidrologica);
+        }
+    }
+
      });
 
 
@@ -406,9 +415,16 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         $observacion = $request->getAttribute('observacion');
         $valor = $request->getAttribute('valor') + 0;
 
-        $registro = new Registro(0,$id_accion);
+       $check = array($id_accion , $observacion , $valor);
 
-        return $registro->actualizacion($observacion , $valor);
+        for ($i=0; $i < count($check) ; $i++) { 
+            if (!isset($check[$i])) {
+                return $check[$i].' No esta definida';
+            }else{
+                $registro = new Registro(0,$id_accion);
+                return $registro->actualizacion($observacion , $valor);
+            }
+        }
 
         
 
@@ -424,7 +440,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $descripcion_datos = $body->{'datos'}->{'descripcion_datos'};
             $accion_general_datos = $body->{'datos'}->{'accion_general'};
             
-            $acciones_especificas = $body->{'accion_especifica'};
+            $acciones_especificas = $body->{'acciones_especificas'};
             
             $obra = $body->{'obra'};
 
@@ -468,9 +484,17 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $inversion = array($inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos);
             $proyecto = array( $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto);
 
-        
-        $registro = new Registro();
-        return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+            $check = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos , $coordenadas_sector , $nombre_sector, $lapso_estimado_inicio , $lapso_estimado_culminacion, $ciclo_inicial , $opcion_ciclo_inicial, $ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos , $inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos , $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto, $acciones_especificas , $obra ,$poblacion_inicial , $lps_inicial);
+
+            for ($i=0; $i < count($check) ; $i++) { 
+                if (!isset($check[$i])) {
+                    return $check[$i].' No esta definida';
+                }else{
+                    $registro = new Registro();
+                    return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+                }
+            }
+
 
 
      });
@@ -483,13 +507,13 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         
         $id_lapso = $body->{'id_lapso'};        
         $lapso_culminacion_final = $body->{'lapso_culminacion_final'};        
-        $lapso_culminación_inicio = $body->{'lapso_culminación_inicio'};
+        $lapso_culminación_inicio = $body->{'lapso_culminacion_inicio'};
 
         $ciclo_final = $body->{'ciclo_final'};        
         $opcion_ciclo_final = $body->{'opcion_ciclo_final'};
         $id_ciclo = $body->{'id_ciclo'};        
 
-        $ejecucion_bolivares_final = $body->{'ejecucion_bolivares final'};
+        $ejecucion_bolivares_final = $body->{'ejecucion_bolivares_final'};
         $ejecucion_euros_final = $body->{'ejecucion_euros_final'};
         $ejecucion_dolares_final = $body->{'ejecucion_dolares_final'};
         $ejecucion_rublos_final = $body->{'ejecucion_rublos_final'};
@@ -515,9 +539,17 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         $lps = array($lps_final , $id_lps);
         $proyectos = array($id_estatus , $id_estado_proyecto, $id_proyecto);
         
-        $registro = new Registro();
-        return $registro->actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos);
+        $check = array($id_lapso , $lapso_culminacion_final , $lapso_culminación_inicio,$ciclo_final , $opcion_ciclo_final , $id_ciclo,$ejecucion_bolivares_final , $ejecucion_euros_final , $ejecucion_dolares_final , $ejecucion_rublos_final , $id_ejecucion_financiera, $poblacion_final , $id_poblacion,$lps_final , $id_lps, $id_estatus , $id_estado_proyecto, $id_proyecto);
+    
+        for ($i=0; $i < count($check) ; $i++) { 
+        if (!isset($check[$i]) or empty($check[$i])) {
+            return 'No esta definida'.$check[$i];
+        }else{
+            $registro = new Registro();
+            return $registro->actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos);
 
+        }
+    }
 
      });
 

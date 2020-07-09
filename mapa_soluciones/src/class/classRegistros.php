@@ -44,7 +44,7 @@
                     $db = new DB();
                     $db=$db->connection('mapa_soluciones');
                     $stmt = $db->prepare($sql); 
-                    $stmt->bind_param("ssi" , $lapso[3] , $lapso[1] , $lapso[0]);
+                    $stmt->bind_param("ssi" , $lapso[2] , $lapso[1] , $lapso[0]);
                     $stmt->execute();
 
                         if ($stmt) {
