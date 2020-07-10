@@ -14,7 +14,7 @@ use \Firebase\JWT\JWT;
 
 
 
-
+//creacion de usuario, solo con filtro de email y nick
 $app->post('/api/creacion/usuarios', function (Request $request, Response $response) { 
    $body = json_decode($request->getBody());
     $nick = $body->{'nick'};
