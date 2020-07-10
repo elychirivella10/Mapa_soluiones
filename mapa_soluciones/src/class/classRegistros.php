@@ -115,7 +115,7 @@
 
             
             
-            function crearProyectos($datos , $acciones_especificas , $obras , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion , $lps_inicial , $proyecto){
+            function crearProyectos($datos , $acciones_especificas , $obras , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto){
                
                 $sql = "INSERT INTO datos (id_datos, nombre, id_tipo_solucion, descripcion, accion_general) VALUES (NULL, ? , ? , ? , ?)";
 
@@ -136,8 +136,7 @@
                             $stmt->execute();
                         }
 
-                        if ($stmt) {
-                            $id_acciones_especificas = $stmt->{"insert_id"};                   
+                        if ($stmt) {                  
                             $sql = "INSERT INTO obras (id_obra, coordenadas) VALUES (NULL, ?)";
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
@@ -192,7 +191,6 @@
                                                 $stmt->execute();
 
                                                 if ($stmt) { 
-                                                    $id_inversion = $stmt->{"insert_id"};
                                                     $sql = "INSERT INTO poblacion (id_problacion, poblacion_inicial, poblacion_final) VALUES (NULL, ? , 0 )";
                                                     $db = new DB();
                                                     $db=$db->connection('mapa_soluciones');
