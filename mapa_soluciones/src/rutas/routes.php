@@ -47,10 +47,10 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
      $app->post('/api/info/user', function (Request $request, Response $response) { 
         $body = json_decode($request->getBody());
-        $body = json_decode($body->body);
-        var_dump($body);
+        $nick = json_decode($body->body);
+       
         
-            $nick = $body->user;
+            
 
             try {
                 $sql = "SELECT usuarios.id_hidrologica FROM usuarios WHERE usuarios.nick = ?";
