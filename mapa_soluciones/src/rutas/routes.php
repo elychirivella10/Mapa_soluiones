@@ -55,9 +55,11 @@ $app->post('/authenticate', function (Request $request, Response $response) {
     $resultado = $db->consultaSinParametros('usuarios_m_soluciones', $sql);
     
     
+    $body=json_decode($body->body);
+    
     
     foreach ($resultado[0] as $key => $user) {
-    if ($user['nick'] == 'ely10' && $user['pass'] == 1) {
+    if ($user['nick'] == $body->user && $user['pass'] == $body->pass) {
         $current_user = $user;
     }}
 
@@ -77,7 +79,7 @@ $app->post('/authenticate', function (Request $request, Response $response) {
             $stmt = $stmt->get_result();
              
             $token_from_db = $stmt->fetch_object();
-            var_dump($token_from_db);
+            
             $db = null;
             if ($token_from_db) {
                 return $response->withJson([
@@ -417,19 +419,25 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
      $app->put('/api/actualizacion/acciones/especificas/{id_accion}/{valor}', function (Request $request, Response $response){
         $id_accion = $request->getAttribute('id_accion') + 0;
-        $observacion = $request->getAttribute('observacion');
         $valor = $request->getAttribute('valor') + 0;
 
-       $check = array($id_accion , $observacion , $valor);
+       $check = array($id_accion, $valor);
+
+        
+        $contador = 0;
 
         for ($i=0; $i < count($check) ; $i++) { 
             if (!isset($check[$i])) {
-                return $check[$i].' No esta definida';
-            }else{
-                $registro = new Registro(0,$id_accion);
-                return $registro->actualizacion($valor);
+                    $contador++;
+                }
             }
-        }
+                
+                if ($contador === 0){
+                    $registro = new Registro(0,$id_accion);
+                    return $registro->actualizacion($valor);
+                }else{
+                    return 'Hay variables que no estan definida';
+                }
 
         
 
@@ -499,15 +507,21 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $proyecto = array( $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto);
 
             $check = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos , $coordenadas_sector , $nombre_sector, $lapso_estimado_inicio , $lapso_estimado_culminacion, $ciclo_inicial , $opcion_ciclo_inicial, $ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos , $inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos , $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto, $acciones_especificas , $obra ,$poblacion_inicial , $lps_inicial);
-
+            $contador = 0;
+    
             for ($i=0; $i < count($check) ; $i++) { 
                 if (!isset($check[$i])) {
-                    return $check[$i].' No esta definida';
-                }else{
-                    $registro = new Registro();
-                    return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+                        $contador++;
+                    }
                 }
-            }
+                    
+                    if ($contador === 0){
+                        $registro = new Registro();
+                        return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+                
+                    }else{
+                        return 'Hay variables que no estan definida';
+                    }
 
 
 
@@ -554,16 +568,22 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         $proyectos = array($id_estatus , $id_estado_proyecto, $id_proyecto);
         
         $check = array($id_lapso , $lapso_culminacion_final , $lapso_culminación_inicio,$ciclo_final , $opcion_ciclo_final , $id_ciclo,$ejecucion_bolivares_final , $ejecucion_euros_final , $ejecucion_dolares_final , $ejecucion_rublos_final , $id_ejecucion_financiera, $poblacion_final , $id_poblacion,$lps_final , $id_lps, $id_estatus , $id_estado_proyecto, $id_proyecto);
+        $contador = 0;
     
-        for ($i=0; $i < count($check) ; $i++) { 
-        if (!isset($check[$i]) or empty($check[$i])) {
-            return 'No esta definida'.$check[$i];
-        }else{
-            $registro = new Registro();
-            return $registro->actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos);
+            for ($i=0; $i < count($check) ; $i++) { 
+                if (!isset($check[$i])) {
+                        $contador++;
+                    }
+                }
+                    
+                    if ($contador === 0){
+                        $registro = new Registro();
+                        return $registro->actualizacionFinal($lapso , $ciclos , $ejecucion_financiera , $poblacion , $lps, $proyectos);
+            
+                    }else{
+                        return 'Hay variables que no estan definida';
+                    }
 
-        }
-    }
 
      });
 

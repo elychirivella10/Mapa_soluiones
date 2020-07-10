@@ -131,9 +131,13 @@
                         for ($i=0; $i < count($acciones_especificas) ; $i++) { 
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
-                            $stmt = $db->prepare($sql); 
-                            $stmt->bind_param("siiii", $acciones_especificas[$i]['observacion'] , $acciones_especificas[$i]['intervencion'] , $acciones_especificas[$i]['cantidad'] , $acciones_especificas[$i]['unidad'] , $id_datos);
-                            $stmt->execute();
+                            $accion = $acciones_especificas[0]->acccion_especifica;
+                            $intervencion = $acciones_especificas[0]->id_intervencion+0;
+                            $cantidad = $acciones_especificas[0]->cantidad+0;
+                            $unidad = $acciones_especificas[0]->id_unidad+0;
+                            $stmt = $db->prepare($sql);
+                            $stmt->bind_param("siiii", $accion , $intervencion , $cantidad , $unidad , $id_datos );
+                            $stmt->execute();  
                         }
 
                         if ($stmt) {                  
@@ -141,6 +145,7 @@
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
                             $stmt = $db->prepare($sql); 
+                            $obras = json_encode($obras);
                             $stmt->bind_param("s", $obras);  
                             $stmt->execute();
 
@@ -150,6 +155,7 @@
                                 $db = new DB();
                                 $db=$db->connection('mapa_soluciones');
                                 $stmt = $db->prepare($sql); 
+                                $sector[0] = json_encode($sector);
                                 $stmt->bind_param("ss", $sector[0] , $sector[1]);
                                 $stmt->execute();
 
@@ -165,7 +171,7 @@
 
                                     if ($stmt) { 
                                         $id_lapso = $stmt->{"insert_id"};
-                                        $sql = "INSERT INTO ciclos (id_ciclo, ciclo_inicial, opcion_ciclo_inicial, ciclo_final, opcion_ciclo_final) VALUES (NULL, ? , ? , 0 , NULL )";
+                                        $sql = "INSERT INTO ciclos (id_ciclo, ciclo_inicial, opcion_ciclo_inicial, ciclo_final, opcion_ciclo_final) VALUES (NULL, ? , ? , 0 , 0 )";
                                         $db = new DB();
                                         $db=$db->connection('mapa_soluciones');
                                         $stmt = $db->prepare($sql); 
@@ -215,9 +221,10 @@
                                                             $db=$db->connection('mapa_soluciones');
                                                             $stmt = $db->prepare($sql); 
                                                             $stmt->bind_param("issiiiiiiiiiiiii", $id_datos , $proyecto[0] , $proyecto [1] , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
-                                                            $stmt->execute();
-                                                                                                                
-                                                            return "ok" ;
+                                                            $stmt->execute();var_dump($stmt);
+                                                                if ($stmt) {
+                                                                    return "ok" ;
+                                                                }                                                
                                                             
                                                         }
                                                     }
