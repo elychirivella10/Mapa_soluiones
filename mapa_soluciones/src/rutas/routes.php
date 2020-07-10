@@ -25,7 +25,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
     
     $check = array($nick , $pass ,$email , $rol , $hidrologica );
     $contador = 0;
-    
+
     for ($i=0; $i < count($check) ; $i++) { 
         if (!isset($check[$i])) {
                 $contador++;
@@ -60,7 +60,7 @@ $app->post('/authenticate', function (Request $request, Response $response) {
     
     foreach ($resultado[0] as $key => $user) {
     if ($user['nick'] == $body->user && $user['pass'] == $body->pass) {
-        $current_user = $user;
+        $current_user = $user;var_dump($current_user);
     }}
 
     if (!isset($current_user)) {
@@ -84,7 +84,8 @@ $app->post('/authenticate', function (Request $request, Response $response) {
             if ($token_from_db) {
                 return $response->withJson([
                 "Token" => $token_from_db->token,
-                "User_render" =>$current_user['id_rol']
+                "User_render" =>$current_user['id_rol'], 
+               // "Hidrologica" =>$current_user
                 ]);
             }    
             }catch (Exception $e) {
