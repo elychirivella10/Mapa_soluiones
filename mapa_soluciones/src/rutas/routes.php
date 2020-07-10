@@ -45,7 +45,35 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
             
      });
 
+     $app->get('/api/info/user', function (Request $request, Response $response) { 
+        $body = json_decode($request->getBody());
+        $body = json_decode($body->body);
+            $nick = $body->user;
 
+            $sql = "SELECT usuarios.*FROM usuarios WHERE usuarios.nick = ?";
+            $db = new DB();
+            $db=$db->connection('usuarios_m_soluciones');
+            $stmt = $db->prepare($sql); 
+            $stmt->bind_param("s", $nick);
+            $stmt->execute();
+            $id_hidrologica =  $stmt->{"id_hidrologica"};
+
+            $sql = "SELECT hidrologicas.* FROM hidrologicas WHERE hidrologicas.id_hidrologica = ?";
+            $db = new DB();
+            $db=$db->connection('mapa_soluciones');
+            $stmt = $db->prepare($sql); 
+            $stmt->bind_param("s", $id_hidrologica);
+            $stmt->execute();
+            return $stmt->{"id_hidrologica"};
+
+
+
+                
+                 
+          });
+     
+     
+     
 
 
 
