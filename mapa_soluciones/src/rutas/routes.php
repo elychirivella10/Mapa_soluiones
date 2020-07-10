@@ -19,6 +19,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
    $body = json_decode($request->getBody());
     $nick = $body->{'nick'};
     $email = $body->{'email'};
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
     $pass = $body->{'pass'};
     $rol = $body->{'id_rol'};           
     $hidrologica = $body->{'id_hidrologica'};           
@@ -31,13 +32,16 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $contador++;
             }
         }
-            
-            if ($contador === 0){
+           
+            if (filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+                return "El email no es valido";
+            }else  if ($contador === 0){
                 $usuarios = new Usuarios($nick , $pass);
                 return $usuarios->creacion($body , $email , $rol , $hidrologica);
             }else{
                 return 'Hay variables que no estan definida';
             }
+           
             
      });
 

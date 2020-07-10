@@ -71,9 +71,7 @@ class Auth {
         return sha1($aud);
     }
 
-/*
 
-    function validacion_email($email){
 
-    }*/
+   
 }
