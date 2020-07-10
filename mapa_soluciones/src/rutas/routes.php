@@ -46,31 +46,61 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      });
 
      $app->get('/api/info/user', function (Request $request, Response $response) { 
-        $body = json_decode($request->getBody());
-        $body = json_decode($body->body);
-            $nick = $body->user;
-
-            $sql = "SELECT usuarios.*FROM usuarios WHERE usuarios.nick = ?";
-            $db = new DB();
-            $db=$db->connection('usuarios_m_soluciones');
-            $stmt = $db->prepare($sql); 
-            $stmt->bind_param("s", $nick);
-            $stmt->execute();
-            $id_hidrologica =  $stmt->{"id_hidrologica"};
-
-            $sql = "SELECT hidrologicas.* FROM hidrologicas WHERE hidrologicas.id_hidrologica = ?";
-            $db = new DB();
-            $db=$db->connection('mapa_soluciones');
-            $stmt = $db->prepare($sql); 
-            $stmt->bind_param("s", $id_hidrologica);
-            $stmt->execute();
-            return $stmt->{"id_hidrologica"};
+       /* $body = json_decode($request->getBody());
+        $body = json_decode($body->body);*/
+            $nick = "Alex";// $body->user;
 
 
 
+
+            try {
+                $sql = "SELECT usuarios.id_hidrologica FROM usuarios WHERE usuarios.nick = ?";
+                $db = new DB();
+                $db=$db->connection('usuarios_m_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("s", $nick);
+                $stmt->execute();
+                $stmt = $stmt->get_result();
+                $stmt = $stmt->fetch_all(MYSQLI_ASSOC);
+                $id_hidrologica = $stmt[0]['id_hidrologica'];
+              
+
+                if ($stmt) {
+                    
+                $sql = "SELECT hidrologicas.* FROM hidrologicas WHERE hidrologicas.id_hidrologica = ?";
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("s", $id_hidrologica );
+                $stmt->execute();
+                $stmt = $stmt->get_result();
+                $stmt = $stmt->fetch_all(MYSQLI_ASSOC);
+                return $stmt[0]['hidrologica'];
+                   
+                }
+                   
                 
-                 
-          });
+                        
+                
+             } 
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+            }
+             });
+    
+  
+
+
+
+
+
+
      
      
      
