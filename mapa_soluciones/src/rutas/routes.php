@@ -25,17 +25,20 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
     
     $check = array($nick , $pass ,$email , $rol , $hidrologica );
     $contador = 0;
+    
     for ($i=0; $i < count($check) ; $i++) { 
         if (!isset($check[$i])) {
                 $contador++;
-        }else if ($contador === 0){
-            $usuarios = new Usuarios($nick , $pass);
-            return $usuarios->creacion($body , $email , $rol , $hidrologica);
-        }else{
-            return $check[$i].' No esta definida';
+            }
         }
-    }
-
+            
+            if ($contador === 0){
+                $usuarios = new Usuarios($nick , $pass);
+                return $usuarios->creacion($body , $email , $rol , $hidrologica);
+            }else{
+                return 'Hay variables que no estan definida';
+            }
+            
      });
 
 
