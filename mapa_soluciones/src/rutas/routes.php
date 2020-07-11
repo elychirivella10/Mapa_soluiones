@@ -46,8 +46,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      });
 
      $app->post('/api/info/user', function (Request $request, Response $response) { 
-        $body = json_decode($request->getBody());
-        $nick = json_decode($body->body);
+        //$body = json_decode($request->getBody());
+        $nick = "Alex";//json_decode($body->body);
        
         
             
@@ -59,10 +59,9 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt = $db->prepare($sql); 
                 $stmt->bind_param("s", $nick);
                 $stmt->execute();
-                $stmt = $stmt->get_result();
-                $stmt = $stmt->fetch_all(MYSQLI_ASSOC);
-                $id_hidrologica = $stmt[0]['id_hidrologica'];
-              
+                $resultado = $stmt->get_result();
+                $resultado = $resultado->fetch_object();
+                $id_hidrologica = $resultado->id_hidrologica;                              
 
                 if ($stmt) {
                     
@@ -73,7 +72,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->bind_param("s", $id_hidrologica );
                 $stmt->execute();
                 $stmt = $stmt->get_result();
-                $stmt = $stmt->fetch_all(MYSQLI_ASSOC);
+                $stmt = $stmt->fetch_object();
 
                 return $response->withJson($stmt);
                    
