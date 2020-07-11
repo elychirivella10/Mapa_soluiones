@@ -46,8 +46,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      });
 
      $app->post('/api/info/user', function (Request $request, Response $response) { 
-        //$body = json_decode($request->getBody());
-        $nick = "Alex";//json_decode($body->body);
+        $body = json_decode($request->getBody());
+        $nick = json_decode($body->body);
        
         
             
@@ -73,6 +73,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->execute();
                 $stmt = $stmt->get_result();
                 $stmt = $stmt->fetch_object();
+
 
                 return $response->withJson($stmt);
                    
@@ -121,7 +122,7 @@ $app->post('/authenticate', function (Request $request, Response $response) {
     
     foreach ($resultado[0] as $key => $user) {
     if ($user['nick'] == $body->user && $user['pass'] == $body->pass) {
-        $current_user = $user;var_dump($current_user);
+        $current_user = $user;
     }}
 
     if (!isset($current_user)) {
