@@ -221,7 +221,7 @@
                                                             $db=$db->connection('mapa_soluciones');
                                                             $stmt = $db->prepare($sql); 
                                                             $stmt->bind_param("issiiiiiiiiiiiii", $id_datos , $proyecto[0] , $proyecto [1] , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
-                                                            $stmt->execute();var_dump($stmt);
+                                                            $stmt->execute();
                                                                 if ($stmt) {
                                                                     return "ok" ;
                                                                 }                                                
