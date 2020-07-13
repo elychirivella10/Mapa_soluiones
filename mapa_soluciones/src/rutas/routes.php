@@ -304,7 +304,7 @@ $app->get('/api/estadistica/situacion/servicio', function (Request $request, Res
 
 $app->get('/api/estadistica/proyecto', function (Request $request, Response $response) { /* para grafico de proyectos finalizados, en ejecuion y por iniciar*/
     
-    $sql ="SELECT estatus.estatus ,COUNT(proyectos.id_estatus) as cantidad 
+    $sql ="SELECT estatus.estatus ,COUNT(proyectos.id_estatus) as cantidad
         FROM proyectos 
         LEFT JOIN estatus ON proyectos.id_estatus = estatus.id_estatus 
         WHERE proyectos.id_estatus IN (0, 1, 2) 
@@ -317,8 +317,14 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         $stmt->execute();
         $stmt = $stmt->get_result();
         $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
+        
         $db = null;
-
+        $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
+        $array = [  
+            "nombre"=> "Proyectos",
+            "cantidad"=> $suma
+        ];
+        array_push($resultado , $array);
         return $response->withJson($resultado);
                 
         
@@ -370,7 +376,7 @@ $app->get('/api/estadistica/tipos/soluciones', function (Request $request, Respo
 
 
 
-$app->get('/api/estadistica/tipos/unidades/intervencion', function (Request $request, Response $response) { 
+$app->get('/api/estadistica/tipos/unidades', function (Request $request, Response $response) { 
     
         $sql  ="SELECT unidades.unidad, COUNT(acciones_especificas.id_unidades) as cantidad 
                         FROM unidades 
