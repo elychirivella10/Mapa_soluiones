@@ -370,6 +370,38 @@ $app->get('/api/estadistica/tipos/soluciones', function (Request $request, Respo
 
 
 
+$app->get('/api/estadistica/tipos/unidades/intervencion', function (Request $request, Response $response) { 
+    
+        $sql  ="SELECT unidades.unidad, COUNT(acciones_especificas.id_unidades) as cantidad 
+                        FROM unidades 
+                LEFT JOIN acciones_especificas ON acciones_especificas.id_unidades = unidades.id_unidades 
+                GROUP BY unidades.unidad";
+
+        try {
+            $db = new DB();
+            $db=$db->connection('mapa_soluciones');
+            $stmt = $db->prepare($sql); 
+            $stmt->execute();
+            $stmt = $stmt->get_result();
+            $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
+
+            return $response->withJson($resultado);
+                    
+            
+         } 
+        catch (MySQLDuplicateKeyException $e) {
+            $e->getMessage();
+        }
+        catch (MySQLException $e) {
+            $e->getMessage();
+        }
+        catch (Exception $e) {
+            $e->getMessage();
+        }
+         });
+
+
+
 $app->get('/api/informacion/general/proyectos', function (Request $request, Response $response) { /* Mostrar proyetos con informacion minima y una vista previa*/
     
 
