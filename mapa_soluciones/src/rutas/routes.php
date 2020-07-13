@@ -265,15 +265,12 @@ $app->get('/api/informacion/poblacion/beneficiada', function (Request $request, 
         }
      });
 
+     /*SELECT `situaciones de servicio`.`situacion_de_servicio` , COUNT(proyectos.id_estado_proyecto) as cantidad FROM `situaciones de servicio` LEFT JOIN `proyectos` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio` WHERE `situaciones de servicio`.`id_situacion_de_servicio` IN (1, 2, 3) GROUP BY `situaciones de servicio`.`situacion_de_servicio` */
 
 
 $app->get('/api/estadistica/situacion/servicio', function (Request $request, Response $response) { /*grafico abajo, centro, donde se muestra dos valores del estado de servicio global*/ 
     
-        $sql  ="SELECT `situaciones de servicio`.`situacion_de_servicio` , COUNT(proyectos.id_estado_proyecto) as cantidad 
-                FROM proyectos 
-                LEFT JOIN `situaciones de servicio` ON proyectos.id_estado_proyecto = `situaciones de servicio`.`id_situacion_de_servicio`
-                WHERE proyectos.id_estado_proyecto IN (1, 2, 3) 
-                GROUP BY `situaciones de servicio`.`situacion_de_servicio`";
+        $sql  ="SELECT `situaciones de servicio`.`situacion_de_servicio` , COUNT(proyectos.id_estado_proyecto) as cantidad FROM `situaciones de servicio` LEFT JOIN `proyectos` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio` WHERE `situaciones de servicio`.`id_situacion_de_servicio` IN (1, 2, 3) GROUP BY `situaciones de servicio`.`situacion_de_servicio`";
 
         try {
             $db = new DB();
