@@ -317,12 +317,19 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         
         $db = null;
         $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
+        $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
+        $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
+        $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
         $array = [  
             "nombre"=> "Proyectos",
-            "cantidad"=> $suma
+            "cantidad"=> $suma,
+            "porcentaje 1" => $porcentaje1,
+            "porcentaje 2" => $porcentaje2,
+            "porcentaje 3" => $porcentaje3
         ];
         array_push($resultado , $array);
-        return $response->withJson($resultado);
+        var_dump($array);
+       // return $response->withJson($resultado);
                 
         
      } 
