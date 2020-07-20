@@ -239,7 +239,7 @@
                                                             $array = [
                                                                 "Mensaje" => "Proyecto Creado",
                                                                 "Id_proyecto" => $id_proyecto
-                                                            ]
+                                                            ];
                                                                 if ($stmt) {
                                                                     return $array;
                                                                 }                                                
