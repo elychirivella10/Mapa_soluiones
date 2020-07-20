@@ -380,7 +380,7 @@ $app->get('/api/estadistica/tipos/soluciones', function (Request $request, Respo
                     [ 
                         "id_tipo_solucion" => 1,
                         "solucion" => "Local o Comunitaria",
-                        "cantidad" => 6
+                        "cantidad" => 0
                     ],
                     [ 
                         "id_tipo_solucion" => 2,
