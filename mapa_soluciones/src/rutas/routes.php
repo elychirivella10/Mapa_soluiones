@@ -318,12 +318,25 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         
         if (count($resultado) === 0) {
                  
-            $array = [  
+            $array = [
+                
+                [ 
+                    "estatus" => "Por iniciar",
+                    "cantidad" => 0
+                ],
+                    [ 
+                    "estatus" => "En ejecucion",
+                    "cantidad" => 0
+                ],
+                [ 
+                    "estatus" => "Finalizado",
+                    "cantidad" => 0
+                ],  
                 "nombre"=> "Proyectos",
-                "cantidad"=> "0",
-                "porcentaje1" => "0",
-                "porcentaje2" => "0",
-                "porcentaje3" => "0"
+                "cantidad"=> 0,
+                "porcentaje1" => 0,
+                "porcentaje2" => 0,
+                "porcentaje3" => 0
             ];
             return $array;
         }else{
