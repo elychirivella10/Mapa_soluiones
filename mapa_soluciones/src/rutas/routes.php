@@ -320,10 +320,10 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
                  
             $array = [  
                 "nombre"=> "Proyectos",
-                "cantidad"=> 0,
-                "porcentaje1" => 0,
-                "porcentaje2" => 0,
-                "porcentaje3" => 0
+                "cantidad"=> "cero",
+                "porcentaje1" => "cero",
+                "porcentaje2" => "cero",
+                "porcentaje3" => "cero"
             ];
             return $array;
         }else{
