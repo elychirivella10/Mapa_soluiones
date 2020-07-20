@@ -121,9 +121,11 @@
 
                     $db = new DB();
                     $db=$db->connection('mapa_soluciones');
+                    $id =$datos[1]+0;
                     $stmt = $db->prepare($sql); 
-                    $stmt->bind_param("siss", $datos[0] , $datos[1] , $datos[2] , $datos[3]);
-                    $stmt->execute();                    
+                    $stmt->bind_param("siss", $datos[0] , $id , $datos[2] , $datos[3]);
+                    $stmt->execute();  
+                                  
 
                     if ($stmt) {
                         $id_datos = $stmt->{"insert_id"};
@@ -131,13 +133,15 @@
                         for ($i=0; $i < count($acciones_especificas) ; $i++) { 
                             $db = new DB();
                             $db=$db->connection('mapa_soluciones');
-                            $accion = $acciones_especificas[0]->acccion_especifica;
-                            $intervencion = $acciones_especificas[0]->id_intervencion+0;
+                            
+                            $accion = $acciones_especificas[0]->descripcionAccion;
+                            $intervencion = $acciones_especificas[0]->intervencion+0;
                             $cantidad = $acciones_especificas[0]->cantidad+0;
-                            $unidad = $acciones_especificas[0]->id_unidad+0;
+                            $unidad = $acciones_especificas[0]->unidad+0;
                             $stmt = $db->prepare($sql);
                             $stmt->bind_param("siiii", $accion , $intervencion , $cantidad , $unidad , $id_datos );
-                            $stmt->execute();  
+                            $stmt->execute(); 
+                             
                         }
 
                         if ($stmt) {                  
@@ -148,16 +152,18 @@
                             $obras = json_encode($obras);
                             $stmt->bind_param("s", $obras);  
                             $stmt->execute();
+                            
 
                             if ($stmt) {
                                 $id_obras = $stmt->{"insert_id"};
-                                $sql = "INSERT INTO sector (id_sector, coordenadas, nombre) VALUES (NULL, ?, ?)";
+                                $sql = "INSERT INTO sector (id_sector, coordenadas) VALUES (NULL, ?)";
                                 $db = new DB();
                                 $db=$db->connection('mapa_soluciones');
                                 $stmt = $db->prepare($sql); 
                                 $sector[0] = json_encode($sector);
-                                $stmt->bind_param("ss", $sector[0] , $sector[1]);
+                                $stmt->bind_param("s", $sector[0]);
                                 $stmt->execute();
+                                
 
                                 
                                 if ($stmt) { 
@@ -168,6 +174,7 @@
                                     $stmt = $db->prepare($sql); 
                                     $stmt->bind_param("ss", $lapso[0] , $lapso[1] );
                                     $stmt->execute();
+                                    
 
                                     if ($stmt) { 
                                         $id_lapso = $stmt->{"insert_id"};
@@ -177,6 +184,7 @@
                                         $stmt = $db->prepare($sql); 
                                         $stmt->bind_param("is", $ciclos[0] , $ciclos[1]);
                                         $stmt->execute();
+                                        
 
                                         if ($stmt) { 
                                             $id_ciclos = $stmt->{"insert_id"};
@@ -186,6 +194,7 @@
                                             $stmt = $db->prepare($sql); 
                                             $stmt->bind_param("dddd", $ejecucion_financiera[0] , $ejecucion_financiera[1] , $ejecucion_financiera[2] , $ejecucion_financiera[3]);                                            
                                             $stmt->execute();
+                                            
 
                                             if ($stmt) { 
                                                 $id_ejecucion_financiera = $stmt->{"insert_id"};
@@ -195,14 +204,17 @@
                                                 $stmt = $db->prepare($sql); 
                                                 $stmt->bind_param("diddd", $inversion[0] , $id_ejecucion_financiera , $inversion[1] , $inversion[2] , $inversion[3]);
                                                 $stmt->execute();
+                                                
 
                                                 if ($stmt) { 
-                                                    $sql = "INSERT INTO poblacion (id_problacion, poblacion_inicial, poblacion_final) VALUES (NULL, ? , 0 )";
+                                                    $sql = "INSERT INTO poblacion (id_problacion, poblacion_inicial) VALUES (NULL, ? )";
                                                     $db = new DB();
                                                     $db=$db->connection('mapa_soluciones');
                                                     $stmt = $db->prepare($sql); 
+                                                    $poblacion_inicial = $poblacion_inicial+0;
                                                     $stmt->bind_param("i", $poblacion_inicial);
                                                     $stmt->execute();
+                                                    
 
                                                     if ($stmt) { 
                                                         $id_poblacion = $stmt->{"insert_id"};
@@ -212,18 +224,20 @@
                                                         $stmt = $db->prepare($sql); 
                                                         $stmt->bind_param("i", $lps_inicial);
                                                         $stmt->execute();
+                                                        
 
                                                         if ($stmt){  
                                                             $id_lps = $stmt->{"insert_id"};
-                                                            $sql = "INSERT INTO proyectos (id_proyecto, id_datos, nombre, descripcion, id_hidrologica, id_estado, id_municipio, id_parroquia, id_obra, id_sector, id_lapso, id_ciclo, id_estatus, id_estado_proyecto, id_ejecucion_financiera, id_poblacion, id_lps) 
-                                                                    VALUES (NULL, ? , ? , ? , ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ? , ?, ?)";
+                                                            $sql = "INSERT INTO proyectos (id_proyecto, id_datos, id_hidrologica, id_estado, id_municipio, id_parroquia, id_obra, id_sector, id_lapso, id_ciclo, id_estatus, id_estado_proyecto, id_ejecucion_financiera, id_poblacion, id_lps) 
+                                                                    VALUES (NULL, ? ,  ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ? , ?, ?)";
                                                             $db = new DB();
                                                             $db=$db->connection('mapa_soluciones');
                                                             $stmt = $db->prepare($sql); 
-                                                            $stmt->bind_param("issiiiiiiiiiiiii", $id_datos , $proyecto[0] , $proyecto [1] , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
+                                                            $stmt->bind_param("iiiiiiiiiiiiii", $id_datos , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
                                                             $stmt->execute();
+                                                            
                                                                 if ($stmt) {
-                                                                    return "ok" ;
+                                                                    return "Proyecto Creado" ;
                                                                 }                                                
                                                             
                                                         }

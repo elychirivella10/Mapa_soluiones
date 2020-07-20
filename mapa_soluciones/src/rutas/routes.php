@@ -323,13 +323,13 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         $array = [  
             "nombre"=> "Proyectos",
             "cantidad"=> $suma,
-            "porcentaje 1" => $porcentaje1,
-            "porcentaje 2" => $porcentaje2,
-            "porcentaje 3" => $porcentaje3
+            "porcentaje1" => round($porcentaje1),
+            "porcentaje2" => round($porcentaje2),
+            "porcentaje3" => round($porcentaje3)
         ];
         array_push($resultado , $array);
-        var_dump($array);
-       // return $response->withJson($resultado);
+        
+        return $response->withJson($resultado);
                 
         
      } 
@@ -552,7 +552,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
      
      $app->post('/api/registro/proyetos', function (Request $request, Response $response){
         $body = json_decode($request->getBody());
-
+        $body = json_decode($body->body);
             $nombre_datos = $body->{'datos'}->{'nombre_datos'};
             $id_tipo_solucion_datos =$body->{'datos'}->{'id_tipo_solucion_datos'};           
             $descripcion_datos = $body->{'datos'}->{'descripcion_datos'};
@@ -563,7 +563,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $obra = $body->{'obra'};
 
             $coordenadas_sector = $body->{'coordenadas_sector'};
-            $nombre_sector = $body->{'nombre_sector'};           
+                      
            
             $lapso_estimado_inicio = $body->{'lapso_estimado_inicio'}; 
             $lapso_estimado_culminacion = $body->{'lapso_estimado_culminacion'};
@@ -595,8 +595,8 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             
             $lps_inicial =$body->{'lps_inicial'};       
 
-            $nombre_proyecto = $body->{'nombre_proyecto'};
-            $descripcion_proyecto = $body->{'descripcion_proyecto'};
+            
+           
             $id_hidrologica = $body->{'id_hidrologica'};
             $id_estado = $body->{'id_estado'};
             $id_municipio = $body->{'id_municipio'};
@@ -604,14 +604,14 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_estatus = $body->{'id_estatus'};        
             
             $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);
-            $sector = array( $coordenadas_sector , $nombre_sector);
+            $sector = array( $coordenadas_sector , );
             $lapso = array($lapso_estimado_inicio , $lapso_estimado_culminacion);
             $ciclos = array( $ciclo_inicial , $opcion_ciclo_inicial );
             $ejecucion_financiera = array($ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos);
             $inversion = array($inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos);
-            $proyecto = array( $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto);
+            $proyecto = array( $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto);
 
-            $check = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos , $coordenadas_sector , $nombre_sector, $lapso_estimado_inicio , $lapso_estimado_culminacion, $ciclo_inicial , $opcion_ciclo_inicial, $ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos , $inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos , $nombre_proyecto , $descripcion_proyecto , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto, $acciones_especificas , $obra ,$poblacion_inicial , $lps_inicial);
+            $check = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos , $coordenadas_sector , $lapso_estimado_inicio , $lapso_estimado_culminacion, $ciclo_inicial , $opcion_ciclo_inicial, $ejecucion_bolivares , $ejecucion_euros , $ejecucion_dolares , $ejecucion_rublos , $inversion_bolivares ,  $inversion_euros , $inversion_dolares , $inversion_rublos , $id_hidrologica , $id_estado , $id_municipio , $id_parroquia , $id_estatus , $id_estado_proyecto, $acciones_especificas , $obra ,$poblacion_inicial , $lps_inicial);
             $contador = 0;
     
             for ($i=0; $i < count($check) ; $i++) { 
