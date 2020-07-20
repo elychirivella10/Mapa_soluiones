@@ -375,7 +375,36 @@ $app->get('/api/estadistica/tipos/soluciones', function (Request $request, Respo
             $stmt = $stmt->get_result();
             $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
 
-            return $response->withJson($resultado);
+            if (count($resultado) === 0) {
+                $array= [                     
+                    [ 
+                        "id_tipo_solucion" => 1,
+                        "solucion" => "Local o Comunitaria",
+                        "cantidad" => 6
+                    ],
+                    [ 
+                        "id_tipo_solucion" => 2,
+                        "solucion" => "Convencional ",
+                        "cantidad" => 0
+                    ],
+                    [
+                        
+                        "id_tipo_solucion" => 3,
+                        "solucion" => "Estructurante",
+                        "cantidad" => 0
+                    ]
+                    ,
+                    [ 
+                        "id_tipo_solucion" => 4,
+                        "solucion" => "En fuentes",
+                        "cantidad" => 0
+                    ]
+                ];
+                return $response->withJson($array);
+            }else{
+                return $response->withJson($resultado);
+            }
+
                     
             
          } 
