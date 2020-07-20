@@ -317,16 +317,13 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         $db = null;
         
         if (count($resultado) === 0) {
-            $porcentaje1 = 0;
-            $porcentaje2 = 0;
-            $porcentaje3 = 0;
-            $suma = 0;           
+                 
             $array = [  
                 "nombre"=> "Proyectos",
-                "cantidad"=> $suma,
-                "porcentaje1" => round($porcentaje1),
-                "porcentaje2" => round($porcentaje2),
-                "porcentaje3" => round($porcentaje3)
+                "cantidad"=> 0,
+                "porcentaje1" => 0,
+                "porcentaje2" => 0,
+                "porcentaje3" => 0
             ];
             return $array;
         }else{
