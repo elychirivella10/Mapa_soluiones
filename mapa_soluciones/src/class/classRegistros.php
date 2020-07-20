@@ -237,8 +237,8 @@
                                                             $stmt->execute();
                                                             $id_proyecto = $stmt->{"insert_id"};
                                                             $array = [
-                                                                "Mensaje" => "Proyecto Creado",
-                                                                "Id_proyecto" => $id_proyecto
+                                                                "mensaje" => "Proyecto Creado",
+                                                                "id_proyecto" => $id_proyecto
                                                             ];
                                                                 if ($stmt) {
                                                                     return $array;
