@@ -317,9 +317,15 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         
         $db = null;
         $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
-        $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
-        $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
-        $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
+        if (!empty($suma)) {
+            $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
+            $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
+            $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
+        }else{
+            $porcentaje1 = 0;
+            $porcentaje2 = 0;
+            $porcentaje3 = 0;            
+         }
         $array = [  
             "nombre"=> "Proyectos",
             "cantidad"=> $suma,
@@ -562,8 +568,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             
             $obra = $body->{'obra'};
 
-            $coordenadas_sector = $body->{'coordenadas_sector'};
-                      
+            $coordenadas_sector = $body->{'coordenadas_sector'};                      
            
             $lapso_estimado_inicio = $body->{'lapso_estimado_inicio'}; 
             $lapso_estimado_culminacion = $body->{'lapso_estimado_culminacion'};
