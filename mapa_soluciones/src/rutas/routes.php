@@ -317,7 +317,8 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         
         $db = null;
         $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
-        if (!empty($suma)) {
+
+        if ($suma != 0) {
             $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
             $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
             $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
