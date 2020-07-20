@@ -314,18 +314,18 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         $stmt->execute();
         $stmt = $stmt->get_result();
         $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
-        
+        var_dump($resultado);
         $db = null;
-        $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
-
-        if ($suma != 0) {
-            $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
-            $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
-            $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
-        }else{
+        
+        if (count($resultado) === 0) {
             $porcentaje1 = 0;
             $porcentaje2 = 0;
             $porcentaje3 = 0;            
+        }else{
+            $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
+            $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
+            $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
+            $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
          }
         $array = [  
             "nombre"=> "Proyectos",
@@ -336,7 +336,7 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         ];
         array_push($resultado , $array);
         
-        return $response->withJson($resultado);
+        //return $response->withJson($resultado);
                 
         
      } 
