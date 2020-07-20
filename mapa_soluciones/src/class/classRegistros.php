@@ -235,9 +235,9 @@
                                                             $stmt = $db->prepare($sql); 
                                                             $stmt->bind_param("iiiiiiiiiiiiii", $id_datos , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
                                                             $stmt->execute();
-                                                            
+                                                            $id_proyecto = $stmt->{"insert_id"};
                                                                 if ($stmt) {
-                                                                    return "Proyecto Creado" ;
+                                                                    return $id_proyecto ;
                                                                 }                                                
                                                             
                                                         }
