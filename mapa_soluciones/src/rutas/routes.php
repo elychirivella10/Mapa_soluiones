@@ -336,7 +336,7 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         ];
         array_push($resultado , $array);
         
-        //return $response->withJson($resultado);
+        return $response->withJson($resultado);
                 
         
      } 
