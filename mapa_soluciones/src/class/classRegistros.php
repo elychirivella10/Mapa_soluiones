@@ -13,7 +13,7 @@
 
                 $sql = "UPDATE acciones_especificas SET valor = ? WHERE acciones_especificas.id_accion_especifica = ?;";
                
-                try {
+                try //cambios
                     $db = new DB();
                     $db=$db->connection('mapa_soluciones');
                     $stmt = $db->prepare($sql); 
