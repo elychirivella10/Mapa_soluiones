@@ -314,7 +314,6 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
         $stmt->execute();
         $stmt = $stmt->get_result();
         $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
-        var_dump($resultado);
         $db = null;
         
         if (count($resultado) === 0) {
