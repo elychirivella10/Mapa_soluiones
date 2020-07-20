@@ -46,8 +46,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      });
 
      $app->post('/api/info/user', function (Request $request, Response $response) { 
-        $body = json_decode($request->getBody());
-        $nick = json_decode($body->body);
+      //  $body = json_decode($request->getBody());
+        $nick = "Alex";//json_decode($body->body);
        
         
             
@@ -62,20 +62,50 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_object();
                 $id_hidrologica = $resultado->id_hidrologica;                              
-
+                
                 if ($stmt) {
                     
-                $sql = "SELECT hidrologicas.id_hidrologica, hidrologicas.hidrologica FROM hidrologicas WHERE hidrologicas.id_hidrologica = ?";
-                $db = new DB();
-                $db=$db->connection('mapa_soluciones');
-                $stmt = $db->prepare($sql); 
-                $stmt->bind_param("s", $id_hidrologica );
-                $stmt->execute();
-                $stmt = $stmt->get_result();
-                $stmt = $stmt->fetch_object();
+                    $sql = "SELECT hidrologicas.* FROM hidrologicas WHERE hidrologicas.id_hidrologica = ?";
+                    $db = new DB();
+                    $db=$db->connection('mapa_soluciones');
+                    $stmt = $db->prepare($sql); 
+                    $stmt->bind_param("i", $id_hidrologica );
+                    $stmt->execute();
+                    $resultado = $stmt->get_result();
+                    $resultado = $resultado->fetch_object();
+                    $estado1 = $resultado->id_estado;  
+                    $estado2 = $resultado->id_estado2;
+                    $estado3 = $resultado->id_estado3;
+                    $hidrologica = $resultado;
+                    
 
+                    if ($stmt) {
+                        $sql = "SELECT estados.id_estado, estados.estado
+                                FROM estados
+                                WHERE estados.id_estado 
+                                IN (? , ? , ?)";
+                        $db = new DB();
+                        $db=$db->connection('mapa_soluciones');
+                        $stmt = $db->prepare($sql); 
+                        $stmt->bind_param("iii", $estado1 , $estado2 , $estado3 );
+                        $stmt->execute();
+                        $resultado = $stmt->get_result();
+                        $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
 
-                return $response->withJson($stmt);
+                        $array = [
+                            "hidrologica" => $hidrologica,
+                            "estados" => $resultado
+                        ];
+                          return $response->withJson($array);
+
+                    }
+
+"SELECT datos.id_tipo_solucion, soluciones.solucion ,COUNT(proyectos.id_proyecto) as cantidad 
+                FROM proyectos 
+                LEFT JOIN datos ON proyectos.id_datos = datos.id_datos
+                LEFT JOIN soluciones ON datos.id_tipo_solucion = soluciones.id_solucion 
+                WHERE datos.id_tipo_solucion IN (1, 2, 3, 4)
+                GROUP BY datos.id_tipo_solucion";
                    
                 }
                    
