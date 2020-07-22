@@ -48,7 +48,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      $app->post('/api/info/user', function (Request $request, Response $response) { 
         $body = json_decode($request->getBody());
         $nick = json_decode($body->body);
-       
+       // "Alex";// <---para pruebas rapidas 
         
             
 
@@ -76,7 +76,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                     $estado1 = $resultado->id_estado;  
                     $estado2 = $resultado->id_estado2;
                     $estado3 = $resultado->id_estado3;
-                    $hidrologica = $resultado;
+                    $hidrologica = $resultado->hidrologica;
                     
 
                     if ($stmt) {
@@ -96,7 +96,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                             "hidrologica" => $hidrologica,
                             "estados" => $resultado
                         ];
-                          return $response->withJson($array);
+                        var_dump($hidrologica);
+                        return $response->withJson($array);
 
                     }
 
