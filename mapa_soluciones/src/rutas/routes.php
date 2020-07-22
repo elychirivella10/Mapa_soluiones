@@ -120,7 +120,75 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
              });
     
   
+             $app->post('/api/municipios', function (Request $request, Response $response) { 
+                $body = json_decode($request->getBody());
+                 $id_estado = $body->{'id_estado'};
 
+
+                 $sql = "SELECT municipios.id_municipio, municipios.municipio, estados.id_estado 
+                 FROM municipios
+                 LEFT JOIN estados ON municipios.id_estado = estados.id_estado 
+                 WHERE estados.id_estado = ?";
+
+                 
+            try {
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("i", $id_estado);
+                $stmt->execute();
+                $resultado = $stmt->get_result();
+                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);                
+                
+                return $response->withJson($resultado);                        
+             } 
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+            }
+            
+            });
+
+
+
+            $app->post('/api/parroquias', function (Request $request, Response $response) { 
+                $body = json_decode($request->getBody());
+                 $id_municipio = $body->{'id_municipio'};
+
+
+                 $sql = "SELECT parroquias.id_parroquia, parroquias.parroquia, municipios.id_municipio 
+                 FROM parroquias 
+                 LEFT JOIN municipios ON parroquias.id_municipio = municipios.id_municipio 
+                 WHERE municipios.id_municipio = ?";
+
+                 
+            try {
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("i", $id_municipio);
+                $stmt->execute();
+                $resultado = $stmt->get_result();
+                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);                
+                
+                return $response->withJson($resultado);                        
+             } 
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+            }
+            
+            });
 
 
 
