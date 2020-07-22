@@ -46,8 +46,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
      });
 
      $app->post('/api/info/user', function (Request $request, Response $response) { 
-      //  $body = json_decode($request->getBody());
-        $nick = "Alex";//json_decode($body->body);
+        $body = json_decode($request->getBody());
+        $nick = json_decode($body->body);
        
         
             
