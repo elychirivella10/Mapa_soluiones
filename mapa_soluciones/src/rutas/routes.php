@@ -96,7 +96,6 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                             "hidrologica" => $hidrologica,
                             "estados" => $resultado
                         ];
-                        var_dump($hidrologica);
                         return $response->withJson($array);
 
                     }
