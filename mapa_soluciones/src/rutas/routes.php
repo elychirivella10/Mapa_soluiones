@@ -100,13 +100,6 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
                     }
 
-"SELECT datos.id_tipo_solucion, soluciones.solucion ,COUNT(proyectos.id_proyecto) as cantidad 
-                FROM proyectos 
-                LEFT JOIN datos ON proyectos.id_datos = datos.id_datos
-                LEFT JOIN soluciones ON datos.id_tipo_solucion = soluciones.id_solucion 
-                WHERE datos.id_tipo_solucion IN (1, 2, 3, 4)
-                GROUP BY datos.id_tipo_solucion";
-                   
                 }
                    
                 
@@ -370,7 +363,7 @@ $app->get('/api/estadistica/proyecto', function (Request $request, Response $res
                 "porcentaje3" => 0
                 ]
             ];
-            return $array;
+            return $response->withJson($array);
         }else{
             $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
             $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
