@@ -122,9 +122,8 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
   
              $app->post('/api/municipios', function (Request $request, Response $response) { 
                 $body = json_decode($request->getBody());
-                 $id_estado = $body->{'id_estado'};
+                 $id_estado = json_decode($body->body);
 
-var_dump($body);
                  $sql = "SELECT municipios.id_municipio, municipios.municipio, estados.id_estado 
                  FROM municipios
                  LEFT JOIN estados ON municipios.id_estado = estados.id_estado 
@@ -140,7 +139,7 @@ var_dump($body);
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);                
                 
-                //return $response->withJson($resultado);                        
+                return $response->withJson($resultado);                        
              } 
             catch (MySQLDuplicateKeyException $e) {
                 $e->getMessage();
