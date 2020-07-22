@@ -77,6 +77,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                     $estado2 = $resultado->id_estado2;
                     $estado3 = $resultado->id_estado3;
                     $hidrologica = $resultado->hidrologica;
+                    $id_hidrologica = $resultado->id_hidrologica;
                     
 
                     if ($stmt) {
@@ -94,6 +95,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
                         $array = [
                             "hidrologica" => $hidrologica,
+                            "id_hidrologica" => $id_hidrologica,
                             "estados" => $resultado
                         ];
                         return $response->withJson($array);
