@@ -126,9 +126,9 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                  $id_estado = $id_estado->id_estado + 0;
 
                  $sql = "SELECT municipios.id_municipio, municipios.municipio, estados.id_estado 
-                 FROM municipios
-                 LEFT JOIN estados ON municipios.id_estado = estados.id_estado 
-                 WHERE estados.id_estado = ?";
+                         FROM municipios 
+                         LEFT JOIN estados ON municipios.id_estado = estados.id_estado 
+                         WHERE municipios.id_estado = ?";
 
                  
             try {
