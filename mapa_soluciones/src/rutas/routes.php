@@ -123,7 +123,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
              $app->post('/api/municipios', function (Request $request, Response $response) { 
                 $body = json_decode($request->getBody());
                  $id_estado = json_decode($body->body);
-                 $id_estado = $id_estado->id_estado;
+                 $id_estado = $id_estado->id_estado + 0;
 
                  $sql = "SELECT municipios.id_municipio, municipios.municipio, estados.id_estado 
                  FROM municipios
@@ -159,7 +159,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
             $app->post('/api/parroquias', function (Request $request, Response $response) { 
                 $body = json_decode($request->getBody());
                 $id_municipio = json_decode($body->body);
-                $id_municipio = $id_municipio->id_municipio;
+                $id_municipio = $id_municipio->id_municipio +0;
 
                  $sql = "SELECT parroquias.id_parroquia, parroquias.parroquia, municipios.id_municipio 
                  FROM parroquias 
