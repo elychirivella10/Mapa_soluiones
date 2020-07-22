@@ -138,7 +138,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->bind_param("i", $id_estado);
                 $stmt->execute();
                 $resultado = $stmt->get_result();
-                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);                
+                $resultado = $resultado->fetch_object();            
                 
                 return $response->withJson($resultado);                        
              } 
@@ -174,7 +174,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->bind_param("i", $id_municipio);
                 $stmt->execute();
                 $resultado = $stmt->get_result();
-                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);                
+                $resultado = $resultado->fetch_object();     
                 
                 return $response->withJson($resultado);                        
              } 
