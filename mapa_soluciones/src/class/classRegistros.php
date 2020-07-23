@@ -241,7 +241,7 @@
                                                                 "id_proyecto" => $id_proyecto
                                                             ];
                                                                 if ($stmt) {
-                                                                    return whitJson($array);
+                                                                    return $array;
                                                                 }                                                
                                                             
                                                         }
