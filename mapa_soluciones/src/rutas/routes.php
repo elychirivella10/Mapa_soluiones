@@ -175,7 +175,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->execute();
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
-
+                
                 return $response->withJson($resultado);                        
              } 
             catch (MySQLDuplicateKeyException $e) {
@@ -749,7 +749,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $id_estado = $body->{'id_estado'};
             $id_municipio = $body->{'id_municipio'};
             $id_parroquia = $body->{'id_parroquia'};
-            $id_estatus = $body->{'id_estatus'};        
+            $id_estatus = 0;        
             
             $datos = array($nombre_datos , $id_tipo_solucion_datos , $descripcion_datos , $accion_general_datos);
             $sector = array( $coordenadas_sector , );
@@ -807,7 +807,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         $lps_final = $body->{'poblacion_final'};
         $id_lps = $body->{'id_ejecucion_financiera'};
 
-        $id_estatus = 0;
+        $id_estatus = $body->{'id_estatus'};
         $id_estado_proyecto = $body->{'id_estado_proyecto'};
         $id_proyecto = $body->{'id_proyecto'};
         
