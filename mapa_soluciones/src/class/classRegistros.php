@@ -229,11 +229,11 @@
                                                         if ($stmt){  
                                                             $id_lps = $stmt->{"insert_id"};
                                                             $sql = "INSERT INTO proyectos (id_proyecto, id_datos, id_hidrologica, id_estado, id_municipio, id_parroquia, id_obra, id_sector, id_lapso, id_ciclo, id_estatus, id_estado_proyecto, id_ejecucion_financiera, id_poblacion, id_lps) 
-                                                                    VALUES (NULL, ? ,  ? , ? , ? , ? , ?, ? , ? , ?, ? , ? , ? , ?, ?)";
+                                                                    VALUES (NULL, ? ,  ? , ? , ? , ? , ?, ? , ? , ?, 0 , ? , ? , ?, ?)";
                                                             $db = new DB();
                                                             $db=$db->connection('mapa_soluciones');
                                                             $stmt = $db->prepare($sql); 
-                                                            $stmt->bind_param("iiiiiiiiiiiiii", $id_datos , $proyecto[2] , $proyecto[3] , $proyecto[4] , $proyecto[5]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[6]  , $proyecto[7] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
+                                                            $stmt->bind_param("iiiiiiiiiiiii", $id_datos , $proyecto[0] , $proyecto[1] , $proyecto[2] , $proyecto[3]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[5] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
                                                             $stmt->execute();
                                                             $id_proyecto = $stmt->{"insert_id"};
                                                             $array = [
