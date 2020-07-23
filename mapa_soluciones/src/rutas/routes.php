@@ -175,7 +175,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->execute();
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
-                
+
                 return $response->withJson($resultado);                        
              } 
             catch (MySQLDuplicateKeyException $e) {
@@ -807,7 +807,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
         $lps_final = $body->{'poblacion_final'};
         $id_lps = $body->{'id_ejecucion_financiera'};
 
-        $id_estatus = $body->{'id_estatus'};
+        $id_estatus = 0;
         $id_estado_proyecto = $body->{'id_estado_proyecto'};
         $id_proyecto = $body->{'id_proyecto'};
         
