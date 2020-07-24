@@ -236,12 +236,76 @@
                                                             $stmt->bind_param("iiiiiiiiiiiii", $id_datos , $proyecto[0] , $proyecto[1] , $proyecto[2] , $proyecto[3]  , $id_obras , $id_sector , $id_lapso , $id_ciclos , $proyecto[5] , $id_ejecucion_financiera , $id_poblacion , $id_lps);
                                                             $stmt->execute();
                                                             $id_proyecto = $stmt->{"insert_id"};
-                                                            $array = [
-                                                                "mensaje" => "Proyecto Creado",
-                                                                "id_proyecto" => $id_proyecto
-                                                            ];
+                                                            
                                                                 if ($stmt) {
-                                                                    return $array;
+                                                                    $sql = "SELECT `hidrologicas`.`hidrologica`, `estados`.`estado` 
+                                                                            FROM `hidrologicas` 
+                                                                            LEFT JOIN `estados` ON `hidrologicas`.`id_estado` = `estados`.`id_estado` 
+                                                                            WHERE `estados`.`id_estado` = ?";
+                                                                    
+                                                                    try {
+                                                                        $db = new DB();
+                                                                        $db=$db->connection('mapa_soluciones');
+                                                                        $stmt = $db->prepare($sql); 
+                                                                        $stmt->bind_param("i", $proyecto[1]);
+                                                                        $stmt->execute();
+                                                                        $resultado = $stmt->get_result();
+                                                                        $resultado = $resultado->fetch_all(MYSQLI_ASSOC);         
+                                                                        $Hidrologica = $resultado[0]["hidrologica"];
+                                                                        $estado = $resultado[1]["estado"];
+
+                                                                            if ($resultado) {
+                                                                                $sql = "SELECT municipios.municipio
+                                                                                FROM municipios WHERE municipios.id_municipio = ?";
+
+                                                                                $db = new DB();
+                                                                                $db=$db->connection('mapa_soluciones');
+                                                                                $stmt = $db->prepare($sql); 
+                                                                                $stmt->bind_param("i", $proyecto[2]);
+                                                                                $stmt->execute();
+                                                                                $resultado = $stmt->get_result();
+                                                                                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);         
+                                                                                $municipio = $resultado[0]["municipio"];
+                                                                                
+                                                                            }
+                                                                                if ($resultado) {
+                                                                                    $sql = "SELECT `soluciones`.`solucion`
+                                                                                    FROM `soluciones` WHERE `soluciones`.`id_solucion` = ?";
+
+                                                                                    $db = new DB();
+                                                                                    $db=$db->connection('mapa_soluciones');
+                                                                                    $stmt = $db->prepare($sql); 
+                                                                                    $stmt->bind_param("i", $datos[1]);
+                                                                                    $stmt->execute();
+                                                                                    $resultado = $stmt->get_result();
+                                                                                    $resultado = $resultado->fetch_all(MYSQLI_ASSOC);         
+                                                                                    $solucion = $resultado[0]["solucion"];
+                                                                                    
+                                                                                }
+
+                                                                        $array = [
+                                                                            "mensaje" => "Proyecto Creado",
+                                                                            "Proyecto"=> $datos[0],
+                                                                            "id_proyecto" => $id_proyecto,
+                                                                            "Hidrologica" => $Hidrologica,
+                                                                            "Estado" => $estado,
+                                                                            "Municipio" => $municipio,
+                                                                            "Solucion" => $solucion
+                                                                        ];
+                                                                        return $array;
+                                                                                             
+                                                                        } 
+                                                                    catch (MySQLDuplicateKeyException $e) {
+                                                                        $e->getMessage();
+                                                                    }
+                                                                    catch (MySQLException $e) {
+                                                                        $e->getMessage();
+                                                                    }
+                                                                    catch (Exception $e) {
+                                                                        $e->getMessage();
+                                                                    }
+
+                                                                    
                                                                 }                                                
                                                             
                                                         }
@@ -259,7 +323,7 @@
         }
 
 
-
+//Estado, hidrologica, nombre de proyecto, id?proyecto
 
 
 
