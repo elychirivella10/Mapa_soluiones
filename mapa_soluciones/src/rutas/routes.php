@@ -564,10 +564,11 @@ $app->get('/api/estadistica/tipos/unidades', function (Request $request, Respons
 $app->get('/api/informacion/general/proyectos', function (Request $request, Response $response) { /* Mostrar proyetos con informacion minima y una vista previa*/
     
 
-    $sql = "SELECT datos.accion_general, proyectos.id_proyecto, datos.nombre, estatus.estatus
-            FROM proyectos 
-            LEFT JOIN datos ON proyectos.id_datos = datos.id_datos 
-            LEFT JOIN estatus ON proyectos.id_estatus = estatus.id_estatus";
+    $sql = "SELECT proyectos.`id_proyecto`, datos.`nombre`, datos.`accion_general`, soluciones.`solucion`, estatus.`estatus`
+        FROM proyectos 
+        LEFT JOIN datos ON proyectos.`id_datos` = datos.`id_datos` 
+        LEFT JOIN soluciones ON datos.`id_tipo_solucion` = soluciones.`id_solucion` 
+        LEFT JOIN estatus ON proyectos.`id_estatus` = estatus.`id_estatus`";
          
          try {
             $db = new DB();
