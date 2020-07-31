@@ -193,7 +193,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
 
 
-            $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { 
+            $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { //Informacion completa de un solo proyecto
             $id_proyecto = $request->getAttribute('id_proyecto');
 
                  $sql = "SELECT proyectos.`id_proyecto`, datos.*, ciclos.`ciclo_inicial`, ciclos.`opcion_ciclo_inicial`, ejecucion_financiera.*, estados.`estado`, municipios.`municipio`, parroquias.`parroquia`, hidrologicas.`hidrologica`, estatus.`estatus`, lapso.*, obras.`coordenadas`, poblacion.`poblacion_inicial`, sector.`coordenadas`, situaciones de servicio.`situacion_de_servicio`, soluciones.`solucion`
@@ -222,7 +222,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
                 $stmt->bind_param("i", $id_proyecto);
                 $stmt->execute();
 
-                
+
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
                 
