@@ -225,8 +225,9 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
 
         $resultado = $stmt->get_result();
         $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
+        $resultado[0]['coordenadas'] = json_decode($resultado[0]['coordenadas']);
         
-        //return $response->withJson($resultado);                        
+        return $response->withJson($resultado);                        
         } 
     catch (MySQLDuplicateKeyException $e) {
         $e->getMessage();
