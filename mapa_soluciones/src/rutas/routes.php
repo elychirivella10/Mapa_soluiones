@@ -193,9 +193,54 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
 
 
+            $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { 
+            $id_proyecto = $request->getAttribute('id_proyecto');
 
-     
-     
+                 $sql = "SELECT proyectos.`id_proyecto`, datos.*, ciclos.`ciclo_inicial`, ciclos.`opcion_ciclo_inicial`, ejecucion_financiera.*, estados.`estado`, municipios.`municipio`, parroquias.`parroquia`, hidrologicas.`hidrologica`, estatus.`estatus`, lapso.*, obras.`coordenadas`, poblacion.`poblacion_inicial`, sector.`coordenadas`, situaciones de servicio.`situacion_de_servicio`, soluciones.`solucion`
+                 FROM proyectos 
+                     LEFT JOIN datos ON proyectos.`id_datos` = datos.`id_datos` 
+                     LEFT JOIN ciclos ON proyectos.`id_ciclo` = ciclos.`id_ciclo` 
+                     LEFT JOIN ejecucion_financiera ON proyectos.`id_ejecucion_financiera` = ejecucion_financiera.`id_ejecucion_financiera` 
+                     LEFT JOIN estados ON proyectos.`id_estado` = estados.`id_estado` 
+                     LEFT JOIN municipios ON proyectos.id_municipio = municipios.id_municipio 
+                     LEFT JOIN parroquias ON parroquias.`id_parroquia` = proyectos.id_parroquia
+                     LEFT JOIN hidrologicas ON hidrologicas.`id_hidrologica`= proyectos.id_hidrologica 
+                     LEFT JOIN estatus ON proyectos.`id_estatus` = estatus.`id_estatus` 
+                     LEFT JOIN lapso ON proyectos.`id_lapso` = lapso.`id_lapso` 
+                     LEFT JOIN obras ON proyectos.`id_obra` = obras.`id_obra` 
+                     LEFT JOIN poblacion ON proyectos.`id_poblacion` = poblacion.`id_problacion` 
+                     LEFT JOIN sector ON proyectos.`id_sector` = sector.`id_sector` 
+                     LEFT JOIN situaciones de servicio ON proyectos.`id_estado_proyecto` = situaciones de servicio.`id_situacion_de_servicio` 
+                     LEFT JOIN soluciones ON datos.`id_tipo_solucion` = soluciones.`id_solucion`
+                     WHERE proyectos.id_proyecto =  ?";
+
+                 
+            try {
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("i", $id_proyecto);
+                $stmt->execute();
+
+                
+                $resultado = $stmt->get_result();
+                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
+                
+                return $response->withJson($resultado);                        
+             } 
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+            }
+            
+            });
+
+  
      
 
 
