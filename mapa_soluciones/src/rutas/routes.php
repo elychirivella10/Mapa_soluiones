@@ -193,54 +193,55 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
 
 
-            $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { //Informacion completa de un solo proyecto
-            $id_proyecto = $request->getAttribute('id_proyecto');
+$app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { //Informacion completa de un solo proyecto
+    $id_proyecto = $request->getAttribute('id_proyecto');
 
-                 $sql = "SELECT `proyectos`.`id_proyecto`, `datos`.*, `ciclos`.`ciclo_inicial`, `ciclos`.`opcion_ciclo_inicial`, `ejecucion_financiera`.*, `estados`.`estado`, `municipios`.`municipio`, `parroquias`.`parroquia`, `hidrologicas`.`hidrologica`, `estatus`.`estatus`, `lapso`.*, `obras`.`coordenadas`, `poblacion`.`poblacion_inicial`, `sector`.`coordenadas`, `situaciones de servicio`.`situacion_de_servicio`, `soluciones`.`solucion`
-                 FROM `proyectos` 
-                     LEFT JOIN `datos` ON `proyectos`.`id_datos` = `datos`.`id_datos` 
-                     LEFT JOIN `ciclos` ON `proyectos`.`id_ciclo` = `ciclos`.`id_ciclo` 
-                     LEFT JOIN `ejecucion_financiera` ON `proyectos`.`id_ejecucion_financiera` = `ejecucion_financiera`.`id_ejecucion_financiera` 
-                     LEFT JOIN `estados` ON `proyectos`.`id_estado` = `estados`.`id_estado` 
-                     LEFT JOIN `municipios` ON `proyectos`.`id_municipio` = `municipios`.`id_municipio` 
-                     LEFT JOIN `parroquias` ON `parroquias`.`id_parroquia` = `proyectos`.`id_parroquia`
-                     LEFT JOIN `hidrologicas` ON `hidrologicas`.`id_hidrologica`= `proyectos`.`id_hidrologica` 
-                     LEFT JOIN `estatus` ON `proyectos`.`id_estatus` = `estatus`.`id_estatus` 
-                     LEFT JOIN `lapso` ON `proyectos`.`id_lapso` = `lapso`.`id_lapso` 
-                     LEFT JOIN `obras` ON `proyectos`.`id_obra` = `obras`.`id_obra` 
-                     LEFT JOIN `poblacion` ON `proyectos`.`id_poblacion` = `poblacion`.`id_problacion` 
-                     LEFT JOIN `sector` ON `proyectos`.`id_sector` = `sector`.`id_sector` 
-                     LEFT JOIN `situaciones de servicio` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio` 
-                     LEFT JOIN `soluciones` ON datos.`id_tipo_solucion` = `soluciones`.`id_solucion`
-                     WHERE `proyectos`.`id_proyecto` =  ?";
+            $sql = "SELECT `proyectos`.`id_proyecto`, `datos`.*, `ciclos`.`ciclo_inicial`, `ciclos`.`opcion_ciclo_inicial`, `ejecucion_financiera`.*, `estados`.`estado`, `municipios`.`municipio`, `parroquias`.`parroquia`, `hidrologicas`.`hidrologica`, `estatus`.`estatus`, `lapso`.*, `obras`.`coordenadas`, `poblacion`.`poblacion_inicial`, `sector`.`coordenadas`, `situaciones de servicio`.`situacion_de_servicio`, `soluciones`.`solucion`
+            FROM `proyectos` 
+                LEFT JOIN `datos` ON `proyectos`.`id_datos` = `datos`.`id_datos` 
+                LEFT JOIN `ciclos` ON `proyectos`.`id_ciclo` = `ciclos`.`id_ciclo` 
+                LEFT JOIN `ejecucion_financiera` ON `proyectos`.`id_ejecucion_financiera` = `ejecucion_financiera`.`id_ejecucion_financiera` 
+                LEFT JOIN `estados` ON `proyectos`.`id_estado` = `estados`.`id_estado` 
+                LEFT JOIN `municipios` ON `proyectos`.`id_municipio` = `municipios`.`id_municipio` 
+                LEFT JOIN `parroquias` ON `parroquias`.`id_parroquia` = `proyectos`.`id_parroquia`
+                LEFT JOIN `hidrologicas` ON `hidrologicas`.`id_hidrologica`= `proyectos`.`id_hidrologica` 
+                LEFT JOIN `estatus` ON `proyectos`.`id_estatus` = `estatus`.`id_estatus` 
+                LEFT JOIN `lapso` ON `proyectos`.`id_lapso` = `lapso`.`id_lapso` 
+                LEFT JOIN `obras` ON `proyectos`.`id_obra` = `obras`.`id_obra` 
+                LEFT JOIN `poblacion` ON `proyectos`.`id_poblacion` = `poblacion`.`id_problacion` 
+                LEFT JOIN `sector` ON `proyectos`.`id_sector` = `sector`.`id_sector` 
+                LEFT JOIN `situaciones de servicio` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio` 
+                LEFT JOIN `soluciones` ON datos.`id_tipo_solucion` = `soluciones`.`id_solucion`
+                WHERE `proyectos`.`id_proyecto` =  ?";
 
-                 
-            try {
-                $db = new DB();
-                $db=$db->connection('mapa_soluciones');
-                $stmt = $db->prepare($sql); 
-                $stmt->bind_param("i", $id_proyecto);
-                $stmt->execute();
-
-
-                $resultado = $stmt->get_result();
-                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
-                
-                //return $response->withJson($resultado);                        
-             } 
-            catch (MySQLDuplicateKeyException $e) {
-                $e->getMessage();
-            }
-            catch (MySQLException $e) {
-                $e->getMessage();
-            }
-            catch (Exception $e) {
-                $e->getMessage();
-            }
             
-            });
+    try {
+        $db = new DB();
+        $db=$db->connection('mapa_soluciones');
+        $stmt = $db->prepare($sql); 
+        $stmt->bind_param("i", $id_proyecto);
+        $stmt->execute();
 
-  
+
+        $resultado = $stmt->get_result();
+        $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
+        
+        //return $response->withJson($resultado);                        
+        } 
+    catch (MySQLDuplicateKeyException $e) {
+        $e->getMessage();
+    }
+    catch (MySQLException $e) {
+        $e->getMessage();
+    }
+    catch (Exception $e) {
+        $e->getMessage();
+    }
+    
+    });
+    
+     
+     
      
 
 
@@ -408,7 +409,12 @@ $app->get('/api/informacion/poblacion/beneficiada', function (Request $request, 
 
 $app->get('/api/estadistica/situacion/servicio', function (Request $request, Response $response) { /*grafico abajo, centro, donde se muestra dos valores del estado de servicio global*/ 
     
-        $sql  ="SELECT `situaciones de servicio`.`situacion_de_servicio` , COUNT(proyectos.id_estado_proyecto) as cantidad FROM `situaciones de servicio` LEFT JOIN `proyectos` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio` WHERE `situaciones de servicio`.`id_situacion_de_servicio` IN (1, 2, 3) GROUP BY `situaciones de servicio`.`situacion_de_servicio`";
+        $sql  ="SELECT `situaciones de servicio`.`situacion_de_servicio` , COUNT(proyectos.id_estado_proyecto) as cantidad, SUM(poblacion.poblacion_inicial) as poblacion 
+        FROM `situaciones de servicio` 
+        LEFT JOIN `proyectos` ON `proyectos`.`id_estado_proyecto` = `situaciones de servicio`.`id_situacion_de_servicio`
+        LEFT JOIN `poblacion` ON `proyectos`.`id_poblacion` = `poblacion`.`id_problacion`
+        WHERE `situaciones de servicio`.`id_situacion_de_servicio` IN (1, 2, 3) 
+        GROUP BY `situaciones de servicio`.`situacion_de_servicio`";
 
         try {
             $db = new DB();
@@ -437,79 +443,69 @@ $app->get('/api/estadistica/situacion/servicio', function (Request $request, Res
          });
 
 
-$app->get('/api/estadistica/proyecto', function (Request $request, Response $response) { /* para grafico de proyectos finalizados, en ejecuion y por iniciar*/
+         $app->get('/api/estadistica/proyecto', function (Request $request, Response $response) { /* para grafico de proyectos finalizados, en ejecuion y por iniciar*/
     
-    $sql ="SELECT estatus.estatus ,COUNT(proyectos.id_estatus) as cantidad
-        FROM proyectos 
-        LEFT JOIN estatus ON proyectos.id_estatus = estatus.id_estatus 
-        WHERE proyectos.id_estatus IN (0, 1, 2) 
-        GROUP BY proyectos.id_estatus";
-
-    try {
-        $db = new DB();
-        $db=$db->connection('mapa_soluciones');
-        $stmt = $db->prepare($sql); 
-        $stmt->execute();
-        $stmt = $stmt->get_result();
-        $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
-        $db = null;
+            $sql ="SELECT estatus.estatus ,COUNT(proyectos.id_estatus) as cantidad
+            FROM estatus 
+            LEFT JOIN `proyectos` ON `proyectos`.`id_estatus` = `estatus`.`id_estatus`
+            WHERE estatus.id_estatus IN (0, 1, 2) 
+            GROUP BY estatus.id_estatus";
         
-        if (count($resultado) === 0) {
+            try {
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->execute();
+                $stmt = $stmt->get_result();
+                $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
+                $db = null;
+                
+               
+                    $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
+
+                    if ($resultado[0]['cantidad'] === 0) {
+                        $porcentaje1 = 0;
+                    }else {
+                        $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;                        
+                    }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+                    if ($resultado[1]['cantidad'] === 0) {
+                        $porcentaje2 = 0;
+                    }else {
+                        $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;                        
+                    }
+//////////////////////////////////////////////////////////////////////////////////////////////////
+                    if ($resultado[2]['cantidad'] === 0) {
+                        $porcentaje3 = 0;
+                    }else {
+                        $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;                        
+                    }
+                    $array = [  
+                        "nombre"=> "Proyectos",
+                        "cantidad"=> $suma,
+                        "porcentaje1" => round($porcentaje1),
+                        "porcentaje2" => round($porcentaje2),
+                        "porcentaje3" => round($porcentaje3)
+                    ];
+                    array_push($resultado , $array);
+                    return $response->withJson($resultado);
                  
-            $array = [
                 
-                [ 
-                    "estatus" => "Por iniciar",
-                    "cantidad" => 0
-                ],
-                    [ 
-                    "estatus" => "En ejecucion",
-                    "cantidad" => 0
-                ],
-                [ 
-                    "estatus" => "Finalizado",
-                    "cantidad" => 0
-                ],  
-                [ 
-                "nombre"=> "Proyectos",
-                "cantidad"=> 0,
-                "porcentaje1" => 0,
-                "porcentaje2" => 0,
-                "porcentaje3" => 0
-                ]
-            ];
-            return $response->withJson($array);
-        }else{
-            $suma = $resultado[0]['cantidad'] + $resultado[1]['cantidad'] + $resultado[2]['cantidad'];
-            $porcentaje1 = ($resultado[0]['cantidad'] * 100) / $suma;
-            $porcentaje2 = ($resultado[1]['cantidad'] * 100) / $suma;
-            $porcentaje3 = ($resultado[2]['cantidad'] * 100) / $suma;
-            $array = [  
-                "nombre"=> "Proyectos",
-                "cantidad"=> $suma,
-                "porcentaje1" => round($porcentaje1),
-                "porcentaje2" => round($porcentaje2),
-                "porcentaje3" => round($porcentaje3)
-            ];
-            array_push($resultado , $array);
-            return $response->withJson($resultado);
-         }
-        
+                        
                 
+             } 
+            catch (MySQLDuplicateKeyException $e) {
+                $e->getMessage();
+            }
+            catch (MySQLException $e) {
+                $e->getMessage();
+            }
+            catch (Exception $e) {
+                $e->getMessage();
+            }
+             });
         
-     } 
-    catch (MySQLDuplicateKeyException $e) {
-        $e->getMessage();
-    }
-    catch (MySQLException $e) {
-        $e->getMessage();
-    }
-    catch (Exception $e) {
-        $e->getMessage();
-    }
-     });
-
-
+        
 
 $app->get('/api/estadistica/tipos/soluciones', function (Request $request, Response $response) { /*grafico arriba centro, para mostrar el porcentaje de proyectos por cada solucion */
     
@@ -816,7 +812,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
                     
                     if ($contador === 0){
                         $registro = new Registro();
-                        return $registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto);
+                        return  $response->withJson($registro->crearProyectos($datos , $acciones_especificas , $obra , $sector, $lapso , $ciclos , $ejecucion_financiera , $inversion , $poblacion_inicial , $lps_inicial , $proyecto));
                 
                     }else{
                         return 'Hay variables que no estan definida';

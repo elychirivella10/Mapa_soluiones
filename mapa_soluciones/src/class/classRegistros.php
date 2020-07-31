@@ -238,21 +238,19 @@
                                                             $id_proyecto = $stmt->{"insert_id"};
                                                             
                                                                 if ($stmt) {
-                                                                    $sql = "SELECT `hidrologicas`.`hidrologica`, `estados`.`estado` 
-                                                                            FROM `hidrologicas` 
-                                                                            LEFT JOIN `estados` ON `hidrologicas`.`id_estado` = `estados`.`id_estado` 
-                                                                            WHERE `estados`.`id_estado` = ?";
+                                                                    $sql = "SELECT `hidrologicas`.`hidrologica`, `estados`.`estado` FROM `hidrologicas` LEFT JOIN `estados` ON `hidrologicas`.`id_estado` = `estados`.`id_estado` WHERE `hidrologicas`.`id_estado`=? or `hidrologicas`.`id_estado2`=? OR `hidrologicas`.`id_estado3` = ?";
                                                                     
                                                                     try {
                                                                         $db = new DB();
                                                                         $db=$db->connection('mapa_soluciones');
                                                                         $stmt = $db->prepare($sql); 
-                                                                        $stmt->bind_param("i", $proyecto[1]);
+                                                                        $stmt->bind_param("iii", $proyecto[1],$proyecto[1], $proyecto[1]);
                                                                         $stmt->execute();
                                                                         $resultado = $stmt->get_result();
-                                                                        $resultado = $resultado->fetch_all(MYSQLI_ASSOC);         
+                                                                        $resultado = $resultado->fetch_all(MYSQLI_ASSOC); 
+                                                                            
                                                                         $Hidrologica = $resultado[0]["hidrologica"];
-                                                                        $estado = $resultado[1]["estado"];
+                                                                        $estado = $resultado[0]["estado"];
 
                                                                             if ($resultado) {
                                                                                 $sql = "SELECT municipios.municipio
