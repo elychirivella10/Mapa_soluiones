@@ -247,7 +247,7 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
                 
-                array_push($result , $resultado);
+                array_push($result[0] , $resultado);
                 
             }
 
