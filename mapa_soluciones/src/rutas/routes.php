@@ -232,7 +232,11 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
         
         
             if ($resultado) {
-                $sql = "SELECT `acciones_especificas`.* FROM `acciones_especificas` WHERE acciones_especificas.id_datos = ?";
+                $sql = "SELECT `acciones_especificas`.* , unidades.* , intervencion.* 
+                FROM `acciones_especificas` 
+                LEFT JOIN intervencion ON acciones_especificas.id_intervencion = intervencion.id_intervencion 
+                LEFT JOIN unidades ON acciones_especificas.id_unidades = unidades.id_unidades 
+                WHERE acciones_especificas.id_datos = ?";
                 $db = new DB();
                 $db=$db->connection('mapa_soluciones');
                 $stmt = $db->prepare($sql); 
