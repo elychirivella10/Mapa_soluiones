@@ -196,7 +196,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { //Informacion completa de un solo proyecto
     $id_proyecto = $request->getAttribute('id_proyecto');
 
-            $sql = "SELECT `proyectos`.`id_proyecto`, `datos`.*, `ciclos`.`ciclo_inicial`, `ciclos`.`opcion_ciclo_inicial`, `ejecucion_financiera`.*, `estados`.`estado`, `municipios`.`municipio`, `parroquias`.`parroquia`, `hidrologicas`.`hidrologica`, `estatus`.`estatus`, `lapso`.*, `obras`.`coordenadas`, `poblacion`.`poblacion_inicial`, `sector`.`coordenadas`, `situaciones de servicio`.`situacion_de_servicio`, `soluciones`.`solucion`
+            $sql = "SELECT `proyectos`.`id_proyecto`, `datos`.*, `ciclos`.`ciclo_inicial`, `ciclos`.`opcion_ciclo_inicial`,  `ciclos`.`ciclo_final`, `ciclos`.`opcion_ciclo_final`, `ejecucion_financiera`.*, `estados`.`estado`, `municipios`.`municipio`, `parroquias`.`parroquia`, `hidrologicas`.`hidrologica`, `estatus`.`estatus`, `lapso`.*, `obras`.`coordenadas` as obras, `poblacion`.`poblacion_inicial`, `sector`.`coordenadas` as sector, `situaciones de servicio`.`situacion_de_servicio`, `soluciones`.`solucion`
             FROM `proyectos` 
                 LEFT JOIN `datos` ON `proyectos`.`id_datos` = `datos`.`id_datos` 
                 LEFT JOIN `ciclos` ON `proyectos`.`id_ciclo` = `ciclos`.`id_ciclo` 
@@ -225,7 +225,8 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
 
         $resultado = $stmt->get_result();
         $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
-        $resultado[0]['coordenadas'] = json_decode($resultado[0]['coordenadas']);
+        $resultado[0]['obras'] = json_decode($resultado[0]['obras']);
+        $resultado[0]['sector'] = json_decode($resultado[0]['sector']);
         
         return $response->withJson($resultado);                        
         } 
