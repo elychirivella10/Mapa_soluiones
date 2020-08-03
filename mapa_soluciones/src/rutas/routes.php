@@ -227,8 +227,28 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
         $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
         $resultado[0]['obras'] = json_decode($resultado[0]['obras']);
         $resultado[0]['sector'] = json_decode($resultado[0]['sector']);
+        $id_datos = $resultado[0]['id_datos'];
+        $result = $resultado;
         
-        return $response->withJson($resultado);                        
+        
+            if ($resultado) {
+                $sql = "SELECT `acciones_especificas`.* FROM `acciones_especificas` WHERE acciones_especificas.id_datos = ?";
+                $db = new DB();
+                $db=$db->connection('mapa_soluciones');
+                $stmt = $db->prepare($sql); 
+                $stmt->bind_param("i", $id_datos);
+                $stmt->execute();
+                
+                
+                $resultado = $stmt->get_result();
+                $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
+                
+                array_push($result , $resultado);
+                
+            }
+
+        
+        return $response->withJson($result);                        
         } 
     catch (MySQLDuplicateKeyException $e) {
         $e->getMessage();
