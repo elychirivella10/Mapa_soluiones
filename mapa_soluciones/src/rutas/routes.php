@@ -272,9 +272,10 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
                             $porcentaje = ($accionesFinalizadas * 100) / count($resultado);
                         }
                         $array = [
+                            'accionesEspecificas' => $acciones,
                             'porcentaje' => $porcentaje
                         ];
-                        array_push($result[0] ,  $acciones , $array);
+                        array_push($result[0] , $array);
                 }
                 
                 
