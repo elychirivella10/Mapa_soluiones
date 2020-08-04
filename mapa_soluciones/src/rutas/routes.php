@@ -195,6 +195,7 @@ $app->post('/api/creacion/usuarios', function (Request $request, Response $respo
 
 $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $request, Response $response) { //Informacion completa de un solo proyecto
     $id_proyecto = $request->getAttribute('id_proyecto');
+    
 
             $sql = "SELECT `proyectos`.`id_proyecto`, `datos`.*, `ciclos`.`ciclo_inicial`, `ciclos`.`opcion_ciclo_inicial`,  `ciclos`.`ciclo_final`, `ciclos`.`opcion_ciclo_final`, `ejecucion_financiera`.*, `estados`.`estado`, `municipios`.`municipio`, `parroquias`.`parroquia`, `hidrologicas`.`hidrologica`, `estatus`.`estatus`, `lapso`.*, `obras`.`coordenadas` as obras, `poblacion`.`poblacion_inicial`, `sector`.`coordenadas` as sector, `situaciones de servicio`.`situacion_de_servicio`, `soluciones`.`solucion`
             FROM `proyectos` 
@@ -246,13 +247,41 @@ $app->get('/api/info/completa/proyecto/{id_proyecto}', function (Request $reques
                 
                 $resultado = $stmt->get_result();
                 $resultado = $resultado->fetch_all(MYSQLI_ASSOC);
+                $acciones = $resultado;
+
+                if ($resultado) {
+                    $sql = "SELECT acciones_especificas.id_datos, acciones_especificas.valor, datos.id_datos FROM acciones_especificas LEFT JOIN datos ON acciones_especificas.id_datos = datos.id_datos WHERE acciones_especificas.id_datos = ?";
+
+                    
+                        $db = new DB();
+                        $db=$db->connection('mapa_soluciones');
+                        $stmt = $db->prepare($sql); 
+                        $stmt->bind_param("i" , $id_datos);
+                        $stmt->execute();
+                        $stmt = $stmt->get_result();
+                        $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
+                        $accionesFinalizadas = null;
+                        for ($i=0; $i < count($resultado) ; $i++) { 
+                            if ($resultado[$i]['valor'] === 1) {
+                                $accionesFinalizadas++;
+                            }
+                        }
+                        if ($accionesFinalizadas === 0) {
+                            $porcentaje = "0";
+                        }else {
+                            $porcentaje = ($accionesFinalizadas * 100) / count($resultado);
+                        }
+                        $array = [
+                            'porcentaje' => $porcentaje
+                        ];
+                        array_push($result[0] ,  $acciones , $array);
+                }
                 
-                array_push($result[0] , $resultado);
                 
             }
 
+            return $response->withJson($result);                        
         
-        return $response->withJson($result);                        
         } 
     catch (MySQLDuplicateKeyException $e) {
         $e->getMessage();
@@ -907,13 +936,3 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
 
 
      });
-
-     $app->get('/api/calculo/porcentaje/acciones', function (Request $request, Response $response) { 
-        $body = json_decode($request->getBody());
-            $id_datos = $body->{'id_datos'};
-
-            $estadisticas = new Proyecto();
-            return $estadisticas->porcentajeAcciones($id_datos);
-            
-          });
-     
