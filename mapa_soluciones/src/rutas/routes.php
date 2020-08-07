@@ -711,6 +711,7 @@ $app->get('/api/informacion/proyectos/hidrologicas', function (Request $request,
             $stmt = $stmt->get_result();
             $resultado = $stmt->fetch_all(MYSQLI_ASSOC);
             $db = null;
+            
 
             try{
                 $sql2 = "SELECT hidrologicas.hidrologica, COUNT(proyectos.id_proyecto) AS finalizados 

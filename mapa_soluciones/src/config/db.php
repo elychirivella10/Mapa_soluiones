@@ -4,7 +4,7 @@
 		private $dbHost = 'localhost';
 		
 		private $dbUser = 'root';
-		private $dbPass = '';
+		private $dbPass = '12345678';
 		
 		public function connection ($dbName) {
 			$conec = new mysqli ($this->dbHost , $this->dbUser , $this->dbPass , $dbName);
